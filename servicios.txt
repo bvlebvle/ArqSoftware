@@ -1,0 +1,35 @@
+Nombres de servicios
+
+1. Gestion de profesionales de la salud - gmeds
+	Definición de data:
+		- Crear médico:  cr-nombre-apellido-especialidad
+		- Eliminar médico:  el-nombre-apellido-especialidad
+		- Editar medico : ed-nombre-apellido-especialidad-nuevoNombre-nuevoApellido-nuevaEspecialidad
+
+2. Creación de horarios  - crhor
+	Definición de data:
+		- Crear horario: cr-nombre-apellido-especialidad-dia-hora
+		- Editar horario: ed-nombre-apellido-especialidad-dia-hora-nuevoDia-nuevaHora
+		- Eliminar horario: el-nombre-apellido-especialidad-dia-hora
+
+3. Gestión de citas - gcita
+	Definición de data:
+		- Crear cita: cr-nombreP-apellidoP-nombreM-ApellidoM-especialidad-dia-mes-hora
+		- Editar cita: ed-nombreP-apellidoP-nombreM-ApellidoM-especialidad-dia-mes-hora-nuevoDia-nuevaHora
+		- Eliminar cita: el-nombreP-apellidoP-nombreM-ApellidoM-especialidad-dia-mes-hora
+
+4. Ranking de médicos - rmeds
+	Definición de data: 
+		- Obtener ranking según cantidad de citas de todos los médicos: r-citas
+		- obtener ranking según cantidad de citas de una especialidad : r-citas-especialidad
+
+5. Visualización de médicos - vmeds
+6. Gestión de cobros - gcobr
+7. Historial para pacientes - hpacs
+
+8. Gestión de salas de atencion - gboxs
+9. Seguimiento de personal médico - smeds
+10. Historial para medicos - hmeds
+11. Bloqueo de horario - bhora
+12. Asignación de turnos de pacientes - aturp
+
