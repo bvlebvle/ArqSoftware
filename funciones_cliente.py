@@ -22,6 +22,7 @@ def menuPrincipal():
     print ("1. Gestión de médicos")
     print ("2. Gestión de horarios de médicos") 
     print ("3. Gestión de citas")
+    print("0. Salir de sistema")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
 
@@ -42,7 +43,6 @@ def menuCrhor():
     print("2. Editar horario")
     print("3. Eliminar horario")
     print ("4. Volver al menú principal")
-    print("0. Salir")
     accion = input("Ingrese el número de la opción que desea: ")
     return accion   
 

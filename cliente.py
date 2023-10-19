@@ -12,7 +12,7 @@ sock.connect (server_address)
 def enviarMsg(message):
     try:
         #enviar mensaje
-        print ('sending {!r}'.format (message))
+        #print ('sending {!r}'.format (message))
         sock.sendall (message)
         
         #recibir mensaje
@@ -23,9 +23,9 @@ def enviarMsg(message):
 
         print(f"Received: {response_data}")
     finally:
-        print ('closing socket')
-        sock.close ()
-    return response_data
+        #print ('closing socket')
+        #sock.close ()
+        return response_data
 
 print("Sistema de gestión de Centro Médico JRG")
 
@@ -205,12 +205,14 @@ while True:
                 data.append(mes)
                 data.append(hora)
                 msg = crearMsg(data, servicio)
+                
                 #envia mensaje a traves del bus
                 enviarMsg(msg.encode())
             if accion == "4":
                 break
     if opcion == "0":
         print("Saliendo del sistema")
+        sock.close ()
         break
 
 
