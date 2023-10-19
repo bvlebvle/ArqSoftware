@@ -3,21 +3,21 @@ Nombres de servicios
 
 1. Gestion de profesionales de la salud - gmeds
 	Definición de data:
-		- Crear médico:  cr-nombre-apellido-especialidad
-		- Eliminar médico:  el-nombre-apellido-especialidad
-		- Editar medico : ed-nombre-apellido-especialidad-nuevoNombre-nuevoApellido-nuevaEspecialidad
+		- Crear médico:  cr-nombre-apellido-especialidad-rut
+		- Eliminar médico:  el-rut
+		- Editar medico : ed-rut-nuevoNombre-nuevoApellido-nuevaEspecialidad
 
 2. Creación de horarios  - crhor
 	Definición de data:
-		- Crear horario: cr-nombre-apellido-especialidad-dia-hora
-		- Editar horario: ed-nombre-apellido-especialidad-dia-hora-nuevoDia-nuevaHora
-		- Eliminar horario: el-nombre-apellido-especialidad-dia-hora
+		- Crear horario: cr-rut-dia-horaInicio-horaFin
+		- Editar horario: ed-rut-dia-horaInicio-horaFin-nuevoDia-nuevaHoraInicio-nuevaHoraFin
+		- Eliminar horario: el-rut-dia-horaInicio-horaFin
 
 3. Gestión de citas - gcita
 	Definición de data:
-		- Crear cita: cr-nombreP-apellidoP-nombreM-ApellidoM-especialidad-dia-mes-hora
-		- Editar cita: ed-nombreP-apellidoP-nombreM-ApellidoM-especialidad-dia-mes-hora-nuevoDia-nuevaHora
-		- Eliminar cita: el-nombreP-apellidoP-nombreM-ApellidoM-especialidad-dia-mes-hora
+		- Crear cita: cr-rutP-nombreP-apellidoP-rutM-especialidad-dia-mes-hora
+		- Editar cita: ed-rutP-rutM--dia-mes-hora-nuevoDia-nuevaHora
+		- Eliminar cita: el-rutP-rutM-dia-mes-hora
 
 4. Ranking de médicos - rmeds
 	Definición de data: 

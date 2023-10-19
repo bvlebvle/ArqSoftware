@@ -1,20 +1,20 @@
 import csv
-def doctor_existe(nombre, apellido, especialidad):
+def doctor_existe(rut):
     archivo_csv = 'medicos.csv'
     with open(archivo_csv, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
             
-            if len(fila) > 2 and fila[1] == nombre and fila[2] == apellido and fila[3] == especialidad:
+            if len(fila) > 2 and fila[1] == rut:
                 return True
     return False
 
-def obtenerIdMedico(nombre, apellido, especialidad):
+def obtenerIdMedico(rut):
     archivo_csv = 'medicos.csv'
     with open(archivo_csv, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
-            if len(fila) > 2 and fila[1] == nombre and fila[2] == apellido and fila[3] == especialidad:
+            if len(fila) > 2 and fila[1] == rut:
                 return fila[0]
     return 0
     
@@ -24,23 +24,12 @@ def obtenerParametros(parametros):
         if parametros[i] == '-':
             pos_caracter.append(i)
     
-    nombre = parametros[0:pos_caracter[0]]
-    apellido = parametros[pos_caracter[0]+1:pos_caracter[1]]
-    especialidad = parametros[pos_caracter[1]+1:]
-    return nombre, apellido, especialidad
+    rut = parametros[0:pos_caracter[0]]
+    nombre = parametros[pos_caracter[0]+1:pos_caracter[1]]
+    apellido = parametros[pos_caracter[1]+1:pos_caracter[2]]
+    especialidad = parametros[pos_caracter[2]+1:]
+    return rut, nombre, apellido, especialidad
 
-def dataEditarMedico(parametros):
-    cont = 0; 
-    for i in range(0, len(parametros)):
-        if parametros[i] == '-':
-            cont += 1
-        if cont == 3:
-            antiguo = parametros[0:i]
-            nuevo = parametros[i+1:]
-            break
-    
-    return antiguo, nuevo
-			
 def obtener_ultimo_id(archivo_csv):
     #archivo_csv = 'horarios.csv'
     with open(archivo_csv, 'r') as archivo:
@@ -56,11 +45,11 @@ def obtener_ultimo_id(archivo_csv):
       
 def crearMedico(parametros):
     archivo_csv = 'medicos.csv'
-    nombre, apellido, especialidad = obtenerParametros(parametros)
+    rut, nombre, apellido, especialidad = obtenerParametros(parametros)
     ultimo_id = obtener_ultimo_id(archivo_csv)
     
     # Verificar si el médico ya existe
-    if doctor_existe(nombre, apellido, especialidad):
+    if doctor_existe(rut):
         #print(f"El médico {nombre} {apellido} ya existe en el archivo.")
         return False
     else:
@@ -68,18 +57,17 @@ def crearMedico(parametros):
         nuevo_id = ultimo_id + 1
         with open(archivo_csv, 'a', newline='') as archivo:
             csv_writer = csv.writer(archivo, delimiter='|')
-            csv_writer.writerow([nuevo_id, nombre, apellido, especialidad])
+            csv_writer.writerow([nuevo_id, rut , nombre, apellido, especialidad])
             
-            #print(f"Se ha agregado al médico {nombre} {apellido} al archivo.")
+            print(f"Se ha agregado al médico {nombre} {apellido} al archivo.")
             return True
-            
-            
-def eliminarMedico(parametros):
+                        
+def eliminarMedico(rut):
     archivo_csv = 'medicos.csv'
-    nombre, apellido, especialidad = obtenerParametros(parametros)
-    id = obtenerIdMedico(nombre, apellido, especialidad)
     
-    if doctor_existe(nombre, apellido, especialidad):
+    id = obtenerIdMedico(rut)
+    
+    if doctor_existe(rut):
         filas_a_mantener = []
         with open(archivo_csv, 'r') as archivo:
             csv_reader = csv.reader(archivo, delimiter='|')
@@ -96,33 +84,23 @@ def eliminarMedico(parametros):
             with open(archivo_csv, 'w', newline='') as archivo:
                 csv_writer = csv.writer(archivo, delimiter='|')
                 csv_writer.writerows(filas_a_mantener)
-            #print(f"El médico {nombre} {apellido} ha sido eliminado del archivo.")
+            print(f"El médico ha sido eliminado del archivo.")
             return True
         else:
-            #print(f"El médico {nombre} {apellido} no existe en el archivo.")
+            print(f"El médico no existe en el archivo.")
             return False
     else:
-        #print(f"El médico {nombre} {apellido} no existe en el archivo.")
+        print(f"El médico no existe en el archivo.")
         return False
 
 def editarMedico(parametros): 
-    parametros_antiguos, parametros_nuevos = dataEditarMedico(parametros)
-    nombre_antiguo, apellido_antiguo, especialidad_antiguo = obtenerParametros(parametros_antiguos)   
+    rut, nombre, apellido, especialidad = obtenerParametros(parametros)   
     
-    if doctor_existe(nombre_antiguo, apellido_antiguo, especialidad_antiguo):
-        eliminarMedico(parametros_antiguos)
-        crearMedico(parametros_nuevos)
-        print(f"El médico {nombre_antiguo} {apellido_antiguo} ha sido editado.")
+    if doctor_existe(rut):
+        eliminarMedico(rut)
+        crearMedico(parametros)
+        print(f"El médico {nombre} {apellido} ha sido editado.")
         return True
     else:
-        print(f"El médico {nombre_antiguo} {apellido_antiguo} no existe en el archivo.")
+        print(f"El médico {nombre} {apellido} no existe en el archivo.")
         return False
-
-
-data = "paula-nunez-general"
-data2 = "martin-saavedra-general"
-data3 = "valentina-diaz-general"
-
-crearMedico(data)
-crearMedico(data2)
-crearMedico(data3)

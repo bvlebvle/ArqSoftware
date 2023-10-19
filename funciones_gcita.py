@@ -7,114 +7,152 @@ def obtenerParametros(data):
     for i in range(0, len(data)):
         if data[i] == '-':
             pos_caracter.append(i)
-    nombreP = data[0:pos_caracter[0]]
-    apellidoP = data[pos_caracter[0]+1:pos_caracter[1]]
-    nombreM = data[pos_caracter[1]+1:pos_caracter[2]]
-    apellidoM = data[pos_caracter[2]+1:pos_caracter[3]]
-    especialidad = data[pos_caracter[3]+1:pos_caracter[4]]
-    dia = data[pos_caracter[4]+1:pos_caracter[5]]
-    mes = data[pos_caracter[5]+1:pos_caracter[6]]
-    hora = data[pos_caracter[6]+1:]
-    return nombreP, apellidoP, nombreM, apellidoM, especialidad, dia, mes, hora
+            
+    rutP = data[0:pos_caracter[0]]
+    nombreP = data[pos_caracter[0]+1:pos_caracter[1]]
+    apellidoP = data[pos_caracter[1]+1:pos_caracter[2]]
+    rutM = data[pos_caracter[2]+1:pos_caracter[3]]
+    dia = data[pos_caracter[3]+1:pos_caracter[4]]
+    mes = data[pos_caracter[4]+1:pos_caracter[5]]
+    hora = data[pos_caracter[5]+1:]
+    return rutP, nombreP, apellidoP, rutM, dia, mes, hora
 
 def obtenerParametrosEditar(data):
-    #nombreP-apellidoP-nombreM-ApellidoM-especialidad-dia-mes-hora-diaNuevo-mesNuevo-horaNueva
+
     cont = 0; 
     pos_caracter = []
     for i in range(0, len(data)):
         if data[i] == '-':
-            cont += 1
-        if cont == 8:
-            antiguo = data[0:i]
-            nuevo = data[i+1:]
-            break
-    
-    for i in range (0, len(nuevo)):
-        if nuevo[i] == '-':
             pos_caracter.append(i)
-    dia_nuevo = nuevo[:pos_caracter[0]]
-    mes_nuevo = nuevo[pos_caracter[0]+1:pos_caracter[1]]
-    hora_nuevo = nuevo[pos_caracter[1]+1:]
+    rutP = data[0:pos_caracter[0]]
+    rutM = data[pos_caracter[0]+1:pos_caracter[1]]
+    dia_antiguo = data[pos_caracter[1]+1:pos_caracter[2]]
+    mes_antiguo = data[pos_caracter[2]+1:pos_caracter[3]]
+    hora_antiguo = data[pos_caracter[3]+1:pos_caracter[4]]
+    dia_nuevo = data[pos_caracter[4]+1:pos_caracter[5]]
+    mes_nuevo = data[pos_caracter[5]+1:pos_caracter[6]]
+    hora_nuevo = data[pos_caracter[6]+1:]
     
-    return antiguo, dia_nuevo, mes_nuevo, hora_nuevo
+    return rutP, rutM, dia_antiguo, mes_antiguo, hora_antiguo, dia_nuevo, mes_nuevo, hora_nuevo
 
+def obtenerParametrosEliminar(data):
+    pos_caracter = []
+    for i in range(0, len(data)):
+        if data[i] == '-':
+            pos_caracter.append(i)
+            
+    rutP = data[0:pos_caracter[0]]
+    rutM = data[pos_caracter[0]+1:pos_caracter[1]]
+    dia = data[pos_caracter[1]+1:pos_caracter[2]]
+    mes = data[pos_caracter[2]+1:pos_caracter[3]]
+    hora = data[pos_caracter[3]+1:]
+    return rutP, rutM, dia, mes, hora
 
-def obtenerIdCita(id_medico,nombreP, apellidoP, dia, mes, hora):
+def obtenerIdCita(rutP, id_medico, dia, mes, hora):
     archivo_csv = 'citas.csv'
     with open(archivo_csv, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
-            if len(fila) > 2 and fila[1] == id_medico and fila[2] == nombreP and fila[3] == apellidoP and fila[4] == dia and fila[5] == mes and fila[6] == hora:
+            if len(fila) > 2 and fila[1] == rutP and fila[4] == id_medico and fila[5] == dia and fila[6] == mes and fila[7] == hora:
                 return fila[0]
         return 0 
 
        
 def crearCita(parametros): 
     archivo_csv = 'citas.csv'
-    nombreP, apellidoP, nombreM, apellidoM, especialidad, dia,mes,hora = obtenerParametros(parametros)
+    rutP,nombreP, apellidoP, rutM, dia,mes,hora = obtenerParametros(parametros)
     id_medico = 0
     
-    if doctor_existe(nombreM, apellidoM, especialidad):
-        id_medico = obtenerIdMedico(nombreM, apellidoM, especialidad)
+    if doctor_existe(rutM):
+        id_medico = obtenerIdMedico(rutM)
     
     #buscar cita
-    if obtenerIdCita(id_medico,nombreP, apellidoP, dia, mes, hora) != 0:
+    if obtenerIdCita(rutP, id_medico, dia, mes, hora) != 0:
         print("cita ya existe, no se puede crear")
         return False
     else: 
         id = obtener_ultimo_id(archivo_csv) + 1
         with open(archivo_csv, 'a', newline='') as archivo:
             csv_writer = csv.writer(archivo, delimiter='|')
-            csv_writer.writerow([id, id_medico, nombreP, apellidoP, dia, mes, hora])
+            csv_writer.writerow([id, rutP, nombreP, apellidoP, id_medico, dia, mes, hora])
             print("se creo cita")
             return True
         
         
 def eliminarCita(parametros):
     archivo_csv = 'citas.csv'
-    nombreP, apellidoP, nombreM, apellidoM, especialidad, dia,mes,hora = obtenerParametros(parametros)
-    id_medico = 0
+    rutP, rutM, dia, mes, hora = obtenerParametrosEliminar(parametros)
+    id_medico = obtenerIdMedico(rutM)
+    id_cita = obtenerIdCita(rutP, id_medico, dia, mes, hora)
     
-    if doctor_existe(nombreM, apellidoM, especialidad):
-        id_medico = obtenerIdMedico(nombreM, apellidoM, especialidad)
-    
-    #buscar cita
-    if obtenerIdCita(id_medico,nombreP, apellidoP, dia, mes, hora) == 0:
-        #==0 es porque no existe
-        print("cita no existe, no se puede eliminar")
-    else: 
-        id = obtenerIdCita(id_medico,nombreP, apellidoP, dia, mes, hora)
+    if id_cita != 0:
+        filas_a_mantener = []
         with open(archivo_csv, 'r') as archivo:
             csv_reader = csv.reader(archivo, delimiter='|')
-            lineas = list(csv_reader)
-            lineas.pop(int(id))
-        with open(archivo_csv, 'w', newline='') as archivo:
-            csv_writer = csv.writer(archivo, delimiter='|')
-            csv_writer.writerows(lineas)
+            cita_encontrada = False
+            for fila in csv_reader:
+                if len(fila) > 2: 
+                    if fila[0] == id_cita:
+                        cita_encontrada = True
+                    else:
+                        filas_a_mantener.append(fila)
+
+        if cita_encontrada:
+            with open(archivo_csv, 'w', newline='') as archivo:
+                csv_writer = csv.writer(archivo, delimiter='|')
+                csv_writer.writerows(filas_a_mantener)
             print("se elimino cita")
+            return True
+        else:
+            print("no se encontro cita")
+            return False
+    else:
+       print("no se encontro cita")    
+       return False
     
     
 def editarCita(parametros):
     archivo_csv = 'citas.csv'
-    antiguo, dia_nuevo, mes_nuevo, hora_nuevo = obtenerParametrosEditar(parametros)
-    nombreP, apellidoP, nombreM, apellidoM, especialidad, dia,mes,hora = obtenerParametros(antiguo)
-    if doctor_existe(nombreM, apellidoM, especialidad):
-        id_medico = obtenerIdMedico(nombreM, apellidoM, especialidad)
+    rutP, rutM, dia_antiguo, mes_antiguo, hora_antiguo, dia_nuevo, mes_nuevo, hora_nuevo = obtenerParametrosEditar(parametros)
+    id_medico = 0
+    
+    if doctor_existe(rutM):
+        id_medico = obtenerIdMedico(rutM)
+    
     #buscar cita
-    if obtenerIdCita(id_medico,nombreP, apellidoP, dia, mes, hora) == 0:
+    if obtenerIdCita(rutP, id_medico, dia_antiguo, mes_antiguo, hora_antiguo) == 0:
         #==0 es porque no existe
         print("cita no existe, no se puede editar")
+        return False
     else: 
-        eliminarCita(antiguo)
-        crearCita(nombreP+"-"+apellidoP+"-"+nombreM+"-"+apellidoM+"-"+especialidad+"-"+dia_nuevo+"-"+mes_nuevo+"-"+hora_nuevo)
+        id = obtenerIdCita(rutP, id_medico, dia_antiguo, mes_antiguo, hora_antiguo)
+        with open(archivo_csv, 'r', newline='') as archivo:
+            csv_reader = csv.reader(archivo, delimiter='|')
+            lineas = list(csv_reader)
+            for fila in lineas:
+                if len(fila) > 2 and fila[1] == rutP and fila[4] == id_medico and fila[5] == dia_antiguo and fila[6] == mes_antiguo and fila[7] == hora_antiguo:
+                    fila[5] = dia_nuevo
+                    fila[6] = mes_nuevo
+                    fila[7] = hora_nuevo
 
+            # Abre el archivo de nuevo en modo escritura y escribe las líneas editadas
+            with open(archivo_csv, 'w', newline='') as archivo:
+                csv_writer = csv.writer(archivo, delimiter='|')
+                csv_writer.writerows(lineas)
+                print("Se editó la cita")
+                return True
+                    
+                    
+                    
     
 
-parametros = "Juan Luis-Perez Gonzalez-martin-saavedra-general-23-08-13:00"
+parametros = "1100-Juan Luis-Perez Gonzalez-1000-23-18-13:00"
+eliminar ="1100-1000-23-08-13:00"
 #print(obtenerParametros(parametros))
 crearCita(parametros)
-#eliminarCita(parametros)
-parametros_editar = "Juan Luis-Perez Gonzalez-martin-saavedra-general-23-08-13:00-25-10-14:00"   
+eliminarCita(eliminar)
+#parametros_editar = "1100-1000-23-08-13:00-30-10-14:00"   
 #print(obtenerParametrosEditar(parametros_editar))
-editarCita(parametros_editar)
+#editarCita(parametros_editar)
+#print(obtenerParametrosEliminar(eliminar))
 

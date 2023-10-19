@@ -5,13 +5,12 @@ def obtenerParametros(data):
     for i in range(0, len(data)):
         if data[i] == '-':
             pos_caracter.append(i)
-    nombre = data[0:pos_caracter[0]]
-    apellido = data[pos_caracter[0]+1:pos_caracter[1]]
-    especialidad = data[pos_caracter[1]+1:pos_caracter[2]]
-    dia = data[pos_caracter[2]+1:pos_caracter[3]]
-    horaInicio = data[pos_caracter[3]+1:pos_caracter[4]]
-    horarioFin = data[pos_caracter[4]+1:]
-    return nombre, apellido, especialidad, dia, horaInicio, horarioFin
+    rut = data[0:pos_caracter[0]]
+    dia = data[pos_caracter[0]+1:pos_caracter[1]]
+    horaInicio = data[pos_caracter[1]+1:pos_caracter[2]]
+    horarioFin = data[pos_caracter[2]+1:]
+    
+    return rut, dia, horaInicio, horarioFin
 
 def obtenerParametrosEditar(data):
     cont = 0; 
@@ -19,7 +18,7 @@ def obtenerParametrosEditar(data):
     for i in range(0, len(data)):
         if data[i] == '-':
             cont += 1
-        if cont == 6:
+        if cont == 4:
             antiguo = data[0:i]
             nuevo = data[i+1:]
             break
@@ -27,6 +26,7 @@ def obtenerParametrosEditar(data):
     for i in range (0, len(nuevo)):
         if nuevo[i] == '-':
             pos_caracter.append(i)
+    print(antiguo, nuevo, pos_caracter)
     dia_nuevo = nuevo[:pos_caracter[0]]
     horaInicio_nuevo = nuevo[pos_caracter[0]+1:pos_caracter[1]]
     horaFin_nuevo = nuevo[pos_caracter[1]+1:]
@@ -45,9 +45,9 @@ def buscarIdHorario(id_medico, dia, horaInicio, horaFin):
 def creacionHorario(data): 
     archivo_csv = 'horarios.csv'
     id_medico = 0
-    nombre, apellido, especialidad, dia, horaInicio, horaFin = obtenerParametros(data)
-    if doctor_existe(nombre, apellido, especialidad):
-        id_medico = obtenerIdMedico(nombre, apellido, especialidad)
+    rut, dia, horaInicio, horaFin = obtenerParametros(data)
+    if doctor_existe(rut):
+        id_medico = obtenerIdMedico(rut)
         if buscarIdHorario(id_medico, dia, horaInicio, horaFin) != 0:
             print("horario ya existe, no se puede crear")
             return False
@@ -64,8 +64,8 @@ def creacionHorario(data):
                     
 def eliminarHorario(data): 
     archivo_csv = 'horarios.csv'
-    nombre, apellido, especialidad, dia, horaInicio, horaFin = obtenerParametros(data)
-    id_medico = obtenerIdMedico(nombre, apellido, especialidad)
+    rut, dia, horaInicio, horaFin = obtenerParametros(data)
+    id_medico = obtenerIdMedico(rut)
     id_horario = buscarIdHorario(id_medico, dia, horaInicio, horaFin)
     
     if id_horario != 0:
@@ -96,13 +96,13 @@ def eliminarHorario(data):
 def editarHorario(data): 
     data_antigua, dia_nuevo, horaInicio_nuevo, horaFin_nuevo = obtenerParametrosEditar(data)
     
-    nombre, apellido, especialidad,dia_antiguo, horaInicio_antiguo, horaFin_antiguo = obtenerParametros(data_antigua)
+    rut,dia_antiguo, horaInicio_antiguo, horaFin_antiguo = obtenerParametros(data_antigua)
     
-    id_medico = obtenerIdMedico(nombre, apellido, especialidad)
+    id_medico = obtenerIdMedico(rut)
     id_horario = buscarIdHorario(id_medico, dia_antiguo, horaInicio_antiguo, horaFin_antiguo)
     
     if id_horario != 0:
-        data_nueva = nombre + "-" + apellido + "-" + especialidad + "-" + dia_nuevo + "-" + horaInicio_nuevo + "-" + horaFin_nuevo
+        data_nueva = rut + "-" + dia_nuevo + "-" + horaInicio_nuevo + "-" + horaFin_nuevo
         if buscarIdHorario(id_medico, dia_nuevo, horaInicio_nuevo, horaFin_nuevo) != 0:
             print("horario ya existe")
             return False
@@ -114,4 +114,10 @@ def editarHorario(data):
         print("no se encontro horario")
         return False
         
-           
+# data =  "1000-lunes-10:00-11:00"
+# data1 = "1000-lunes-10:00-11:00-martes-11:00-12:00"
+# creacionHorario(data)
+# #eliminarHorario(data)
+# editarHorario(data1)
+
+# obtenerParametrosEditar(data1)

@@ -1,6 +1,2 @@
-id| idMedico|dia|horaInicio|horaFin
-3|1|lunes|10:00|13:30
-6|1|lunes|10:00|13:00
-7|1|martes|11:00|13:30
-8|1|jueves|11:00|13:30
-9|4|jueves|12:00|13:00
+id| idMedico|dia|horaInicio|horaFin1|1|lunes|10:00|11:00
+1|1|martes|11:00|12:00

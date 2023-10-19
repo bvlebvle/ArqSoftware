@@ -34,12 +34,28 @@ def menuGmeds():
 	print ("4. Volver al menú principal")
 	accion = input("Ingrese el número de la opción que desea: ")
 	return accion
-    
-    
-    
-    
-    
-      
+ 
+def menuCrhor():
+    print("Gestión de horarios de médicos")
+    print("Puede escoger entre las siguientes opciones:")
+    print("1. Crear horario")
+    print("2. Editar horario")
+    print("3. Eliminar horario")
+    print ("4. Volver al menú principal")
+    print("0. Salir")
+    accion = input("Ingrese el número de la opción que desea: ")
+    return accion   
+
+def menuGcita():
+    print("Gestión de citas")
+    print("Puede escoger entre las siguientes opciones:")
+    print("1. Crear cita")
+    print("2. Editar cita")
+    print("3. Eliminar cita")
+    print ("4. Volver al menú principal")
+    accion = input("Ingrese el número de la opción que desea: ")
+    return accion
+
 data=["cr","nombre", "apellido", "especialidad"]
 servicio = "crmed"
 crearMsg(data, servicio)

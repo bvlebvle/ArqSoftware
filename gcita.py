@@ -37,8 +37,8 @@ try:
       
       accion = data.decode ()[5:7]
       parametros = data.decode ()[8:]
-      print (accion)
-      print (parametros)
+      print ("La accion es: ", accion)
+      print ("Parametros", parametros)
       resp= b''
       print ("Processing ...")
       
