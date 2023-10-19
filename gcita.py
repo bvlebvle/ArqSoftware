@@ -1,5 +1,5 @@
 import socket
-from funciones_gmeds import *
+from funciones_gcita import *
 # Create a TCP/IP socket
 sock = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
 
@@ -11,7 +11,7 @@ sock.connect (server_address)
 try:
     # inscribir servicio en el bus, se hace para cada servicio
     #los ultimos 5 caracteres son el nombre del servicio
-    message = b'00010sinitgmeds'
+    message = b'00010sinitgcita'
     print ('sending {!r}'.format (message))
     sock.sendall (message)
     
@@ -43,23 +43,23 @@ try:
       print ("Processing ...")
       
       if accion == 'cr':
-          result = crearMedico(parametros)
+          result = crearCita(parametros)
           if result: 
-              resp = b'00011gmedsCreado'
+              resp = b'00015gcitaCitaCreada'
           else: 
-              resp = b'00013gmedsNoCreado'  
+              resp = b'00017gcitaCitaNoCreado'  
       if accion == 'el':
-          result = eliminarMedico(parametros)
+          result = eliminarCita(parametros)
           if result: 
-              resp = b'00014gmedsEliminado'
+              resp = b'00018gcitaCitaEliminado'
           else: 
-              resp = b'00016gmedsNoEliminado'
+              resp = b'00020gcitaCitaNoEliminado'
       if accion == 'ed':
-          result = editarMedico(parametros)
+          result = editarCita(parametros)
           if result: 
-              resp = b'00012gmedsEditado'
+              resp = b'00016gcitaCitaEditada'
           else: 
-              resp = b'00014gmedsNoEditado'        
+              resp = b'00018gcitaCitaNoEditada'        
 
       print ('sending {!r}'.format (resp))
       sock.sendall (resp)

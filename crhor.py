@@ -1,5 +1,5 @@
 import socket
-from funciones_gmeds import *
+from funciones_crhor import *
 # Create a TCP/IP socket
 sock = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
 
@@ -11,7 +11,7 @@ sock.connect (server_address)
 try:
     # inscribir servicio en el bus, se hace para cada servicio
     #los ultimos 5 caracteres son el nombre del servicio
-    message = b'00010sinitgmeds'
+    message = b'00010sinitcrhor'
     print ('sending {!r}'.format (message))
     sock.sendall (message)
     
@@ -43,23 +43,23 @@ try:
       print ("Processing ...")
       
       if accion == 'cr':
-          result = crearMedico(parametros)
+          result = creacionHorario(parametros)
           if result: 
-              resp = b'00011gmedsCreado'
+              resp = b'00018crhorHorarioCreado'
           else: 
-              resp = b'00013gmedsNoCreado'  
+              resp = b'00020crhorHorarioNoCreado'  
       if accion == 'el':
-          result = eliminarMedico(parametros)
+          result = eliminarHorario(parametros)
           if result: 
-              resp = b'00014gmedsEliminado'
+              resp = b'00021crhorHorarioEliminado'
           else: 
-              resp = b'00016gmedsNoEliminado'
+              resp = b'00023crhorHorarioNoEliminado'
       if accion == 'ed':
-          result = editarMedico(parametros)
+          result = editarHorario(parametros)
           if result: 
-              resp = b'00012gmedsEditado'
+              resp = b'00019crhorHorarioEditado'
           else: 
-              resp = b'00014gmedsNoEditado'        
+              resp = b'00021crhorHorarioNoEditado'        
 
       print ('sending {!r}'.format (resp))
       sock.sendall (resp)

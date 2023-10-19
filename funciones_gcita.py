@@ -59,14 +59,16 @@ def crearCita(parametros):
     
     #buscar cita
     if obtenerIdCita(id_medico,nombreP, apellidoP, dia, mes, hora) != 0:
-        #!=0 es porque ya existe
         print("cita ya existe, no se puede crear")
+        return False
     else: 
         id = obtener_ultimo_id(archivo_csv) + 1
         with open(archivo_csv, 'a', newline='') as archivo:
             csv_writer = csv.writer(archivo, delimiter='|')
             csv_writer.writerow([id, id_medico, nombreP, apellidoP, dia, mes, hora])
             print("se creo cita")
+            return True
+        
         
 def eliminarCita(parametros):
     archivo_csv = 'citas.csv'
@@ -115,3 +117,4 @@ crearCita(parametros)
 parametros_editar = "Juan Luis-Perez Gonzalez-martin-saavedra-general-23-08-13:00-25-10-14:00"   
 #print(obtenerParametrosEditar(parametros_editar))
 editarCita(parametros_editar)
+
