@@ -19,6 +19,8 @@ Nombres de servicios
 		- Editar cita: ed-rutP-rutM--dia-mes-hora-nuevoDia-nuevaHora
 		- Eliminar cita: el-rutP-rutM-dia-mes-hora
 
+--------------------------------------------
+vale
 4. Ranking de médicos - rmeds
 	Definición de data: 
 		- Obtener ranking según cantidad de citas de todos los médicos: r-citas
@@ -26,10 +28,17 @@ Nombres de servicios
 
 5. Visualización de médicos - vmeds
 6. Gestión de cobros - gcobr
-7. Historial para pacientes - hpacs
 
+---------------------------------------------
+kevin
+
+7. Historial para pacientes - hpacs
 8. Gestión de salas de atencion - gboxs
 9. Seguimiento de personal médico - smeds
+
+---------------------------------------------
+shun 
+
 10. Historial para medicos - hmeds
 11. Bloqueo de horario - bhora
 12. Asignación de turnos de pacientes - aturp
