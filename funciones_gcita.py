@@ -53,7 +53,7 @@ def obtenerParametrosEliminar(data):
 
 
 def obtenerIdCita(rutP, id_medico, dia, mes, hora):
-    archivo_csv = 'citas.csv'
+    archivo_csv = './DB/citas.csv'
     with open(archivo_csv, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
@@ -63,7 +63,7 @@ def obtenerIdCita(rutP, id_medico, dia, mes, hora):
 
 
 def crearCita(parametros):
-    archivo_csv = 'citas.csv'
+    archivo_csv = './DB/citas.csv'
     rutP, nombreP, apellidoP, rutM, dia, mes, hora = obtenerParametros(
         parametros)
     id_medico = 0
@@ -86,7 +86,7 @@ def crearCita(parametros):
 
 
 def eliminarCita(parametros):
-    archivo_csv = 'citas.csv'
+    archivo_csv = './DB/citas.csv'
     rutP, rutM, dia, mes, hora = obtenerParametrosEliminar(parametros)
     id_medico = obtenerIdMedico(rutM)
     id_cita = obtenerIdCita(rutP, id_medico, dia, mes, hora)
@@ -118,7 +118,7 @@ def eliminarCita(parametros):
 
 
 def editarCita(parametros):
-    archivo_csv = 'citas.csv'
+    archivo_csv = './DB/citas.csv'
     rutP, rutM, dia_antiguo, mes_antiguo, hora_antiguo, dia_nuevo, mes_nuevo, hora_nuevo = obtenerParametrosEditar(
         parametros)
     id_medico = 0

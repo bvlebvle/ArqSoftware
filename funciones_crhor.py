@@ -55,7 +55,7 @@ def obtenerParametrosEditar(data):
 
 
 def buscarIdHorario(id_medico, dia, horaInicio, horaFin):
-    archivo_csv = 'horarios.csv'
+    archivo_csv = './DB/horarios.csv'
     with open(archivo_csv, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
@@ -65,7 +65,7 @@ def buscarIdHorario(id_medico, dia, horaInicio, horaFin):
 
 
 def creacionHorario(data):
-    archivo_csv = 'horarios.csv'
+    archivo_csv = './DB/horarios.csv'
     id_medico = 0
     rut, dia, horaInicio, horaFin = obtenerParametros(data)
     horas = arregloHoras(horaInicio, horaFin)
@@ -93,7 +93,7 @@ def creacionHorario(data):
 
 
 def eliminarHorario(data):
-    archivo_csv = 'horarios.csv'
+    archivo_csv = './DB/horarios.csv'
     rut, dia, horaInicio, horaFin = obtenerParametros(data)
     id_medico = obtenerIdMedico(rut)
     horarios = arregloHoras(horaInicio, horaFin)
