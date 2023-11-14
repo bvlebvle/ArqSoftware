@@ -1,5 +1,25 @@
+import datetime
 from funciones_gmeds import *
 from funciones_crhor import *
+from funciones_gpacs import *
+
+
+def obtenerDiaSemana(fecha_dia, mes):
+    dia = datetime.datetime(2023, int(mes), int(fecha_dia)).weekday()
+    if dia == 0:
+        return "LUNES"
+    elif dia == 1:
+        return "MARTES"
+    elif dia == 2:
+        return "MIERCOLES"
+    elif dia == 3:
+        return "JUEVES"
+    elif dia == 4:
+        return "VIERNES"
+    elif dia == 5:
+        return "SABADO"
+    elif dia == 6:
+        return "DOMINGO"
 
 
 def obtenerParametros(data):
@@ -10,18 +30,15 @@ def obtenerParametros(data):
             pos_caracter.append(i)
 
     rutP = data[0:pos_caracter[0]]
-    nombreP = data[pos_caracter[0]+1:pos_caracter[1]]
-    apellidoP = data[pos_caracter[1]+1:pos_caracter[2]]
-    rutM = data[pos_caracter[2]+1:pos_caracter[3]]
-    dia = data[pos_caracter[3]+1:pos_caracter[4]]
-    mes = data[pos_caracter[4]+1:pos_caracter[5]]
-    hora = data[pos_caracter[5]+1:]
-    return rutP, nombreP, apellidoP, rutM, dia, mes, hora
+    rutM = data[pos_caracter[0]+1:pos_caracter[1]]
+    dia = data[pos_caracter[1]+1:pos_caracter[2]]
+    mes = data[pos_caracter[2]+1:pos_caracter[3]]
+    hora = data[pos_caracter[3]+1:]
+    return rutP, rutM, dia, mes, hora
 
 
 def obtenerParametrosEditar(data):
 
-    cont = 0
     pos_caracter = []
     for i in range(0, len(data)):
         if data[i] == '-':
@@ -52,44 +69,80 @@ def obtenerParametrosEliminar(data):
     return rutP, rutM, dia, mes, hora
 
 
-def obtenerIdCita(rutP, id_medico, dia, mes, hora):
+def obtenerIdCita(id_paciente, id_medico, dia, mes, hora):
     archivo_csv = './DB/citas.csv'
     with open(archivo_csv, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
-            if len(fila) > 2 and fila[1] == rutP and fila[4] == id_medico and fila[5] == dia and fila[6] == mes and fila[7] == hora:
+            if len(fila) > 2 and fila[1] == id_paciente and fila[2] == id_medico and fila[4] == dia and fila[5] == mes and fila[6] == hora:
                 return fila[0]
         return 0
 
 
 def crearCita(parametros):
+    print("------------------------------")
+    print("Creando cita...")
     archivo_csv = './DB/citas.csv'
-    rutP, nombreP, apellidoP, rutM, dia, mes, hora = obtenerParametros(
+    rutP, rutM, fecha_dia, mes, hora = obtenerParametros(
         parametros)
-    id_medico = 0
 
-    if doctor_existe(rutM):
-        id_medico = obtenerIdMedico(rutM)
+    # paciente
+    id_paciente = obtenerIdPaciente(rutP)
 
-    # buscar cita
-    if obtenerIdCita(rutP, id_medico, dia, mes, hora) != 0:
-        print("cita ya existe, no se puede crear")
+    if id_paciente == 0:
+        print("Paciente no existe")
         return False
-    else:
-        id = obtener_ultimo_id(archivo_csv) + 1
+
+    # medico
+    id_medico = obtenerIdMedico(rutM)
+    if id_medico == 0:
+        print("Medico no existe")
+        return False
+    # horario
+    dia_semana = obtenerDiaSemana(fecha_dia, mes)
+    id_horario = buscarIdHorario(id_medico, dia_semana, hora)
+    if id_horario == 0:
+        print("Horario no existe")
+        return False
+    # verificar si horario esta disponible
+    id_cita = obtenerIdCita(id_paciente, id_medico, fecha_dia, mes, hora)
+    if id_cita != 0:
+        print("Cita ya existe")
+        return False
+
+    if disponibilidadHorario(id_horario):
+        # crear cita
+        ultimo_id = obtener_ultimo_id(archivo_csv)
+        id_cita = ultimo_id + 1
+        estado = "AGENDADA"
+        monto = 0
+        nueva_cita = [id_cita, id_medico, id_paciente, dia_semana,
+                      fecha_dia, mes, hora, estado, monto]
         with open(archivo_csv, 'a', newline='') as archivo:
             csv_writer = csv.writer(archivo, delimiter='|')
-            csv_writer.writerow(
-                [id, rutP, nombreP, apellidoP, id_medico, dia, mes, hora])
-            print("se creo cita")
-            return True
+            csv_writer.writerow(nueva_cita)
+        cambioEstadoHorario(id_horario, False)
+        print("id cita: ", id_cita)
+        print("Se creo cita")
+
+        return True
+    else:
+        print("Horario no disponible")
+        return False
 
 
 def eliminarCita(parametros):
+    print("------------------------------")
+    print("Eliminando cita...")
     archivo_csv = './DB/citas.csv'
     rutP, rutM, dia, mes, hora = obtenerParametrosEliminar(parametros)
     id_medico = obtenerIdMedico(rutM)
-    id_cita = obtenerIdCita(rutP, id_medico, dia, mes, hora)
+    id_paciente = obtenerIdPaciente(rutP)
+    id_cita = obtenerIdCita(id_paciente, id_medico, dia, mes, hora)
+    dia_semana = obtenerDiaSemana(dia, mes)
+    id_horario = buscarIdHorario(id_medico, dia_semana, hora)
+
+    print("Id cita: ", id_cita)
 
     if id_cita != 0:
         filas_a_mantener = []
@@ -107,6 +160,7 @@ def eliminarCita(parametros):
             with open(archivo_csv, 'w', newline='') as archivo:
                 csv_writer = csv.writer(archivo, delimiter='|')
                 csv_writer.writerows(filas_a_mantener)
+            cambioEstadoHorario(id_horario, True)
             print("Se elimino cita")
             return True
         else:
@@ -118,45 +172,62 @@ def eliminarCita(parametros):
 
 
 def editarCita(parametros):
+    print("--------------------------------------------")
+    print("Editando cita...")
     archivo_csv = './DB/citas.csv'
     rutP, rutM, dia_antiguo, mes_antiguo, hora_antiguo, dia_nuevo, mes_nuevo, hora_nuevo = obtenerParametrosEditar(
         parametros)
     id_medico = 0
 
-    if doctor_existe(rutM):
-        id_medico = obtenerIdMedico(rutM)
+    # data antigua
+    data_antigua = rutP + "-" + rutM + "-" + \
+        dia_antiguo + "-" + mes_antiguo + "-" + hora_antiguo
+    # data nueva
+    data_nueva = rutP + "-" + rutM + "-" + \
+        dia_nuevo + "-" + mes_nuevo + "-" + hora_nuevo
 
-    # buscar cita
-    if obtenerIdCita(rutP, id_medico, dia_antiguo, mes_antiguo, hora_antiguo) == 0:
-        # ==0 es porque no existe
-        print("cita no existe, no se puede editar")
+    id_cita = obtenerIdCita(rutP, rutM, dia_antiguo, mes_antiguo, hora_antiguo)
+
+    # ver si el horario esta disponible
+    id_medico = obtenerIdMedico(rutM)
+    dia_semana_nuevo = obtenerDiaSemana(dia_nuevo, mes_nuevo)
+
+    id_horario = buscarIdHorario(id_medico, dia_semana_nuevo, hora_nuevo)
+
+    if id_horario == 0:
+        print("Horario no disponible para cita nueva")
         return False
-    else:
-        id = obtenerIdCita(rutP, id_medico, dia_antiguo,
-                           mes_antiguo, hora_antiguo)
-        with open(archivo_csv, 'r', newline='') as archivo:
-            csv_reader = csv.reader(archivo, delimiter='|')
-            lineas = list(csv_reader)
-            for fila in lineas:
-                if len(fila) > 2 and fila[1] == rutP and fila[4] == id_medico and fila[5] == dia_antiguo and fila[6] == mes_antiguo and fila[7] == hora_antiguo:
-                    fila[5] = dia_nuevo
-                    fila[6] = mes_nuevo
-                    fila[7] = hora_nuevo
 
-            # Abre el archivo de nuevo en modo escritura y escribe las líneas editadas
-            with open(archivo_csv, 'w', newline='') as archivo:
-                csv_writer = csv.writer(archivo, delimiter='|')
-                csv_writer.writerows(lineas)
-                print("Se editó la cita")
+    id_paciente = obtenerIdPaciente(rutP)
+    id_cita = obtenerIdCita(id_paciente, id_medico,
+                            dia_antiguo, mes_antiguo, hora_antiguo)
+
+    if id_cita == 0:
+        print("Cita no existe")
+        return False
+
+    if disponibilidadHorario(id_horario):
+        if crearCita(data_nueva):
+            if eliminarCita(data_antigua):
+                print("Se edito cita")
                 return True
+            else:
+                print("No se encontro cita")
+                return False
+        else:
+            print("No se pudo crear cita")
+            return False
+    else:
+        print("Horario no disponible para cita nueva")
+        return False
 
 
-parametros = "1100-Juan Luis-Perez Gonzalez-1000-23-18-13:00"
-eliminar = "1100-1000-23-08-13:00"
+# parametros = "1111-1000-23-10-11:00"
+# eliminar = "1111-1000-23-10-11:00"
 # print(obtenerParametros(parametros))
-crearCita(parametros)
-eliminarCita(eliminar)
-# parametros_editar = "1100-1000-23-08-13:00-30-10-14:00"
+# crearCita(parametros)
+# eliminarCita(eliminar)
+# parametros_editar = "1111-1000-23-10-11:00-23-10-10:30"
 # print(obtenerParametrosEditar(parametros_editar))
 # editarCita(parametros_editar)
 # print(obtenerParametrosEliminar(eliminar))

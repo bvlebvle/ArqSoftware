@@ -11,4 +11,4 @@ def obtenerIdPaciente(rut):
         return 0
 
 
-print(obtenerIdPaciente("1111"))
+# print(obtenerIdPaciente("1111"))
