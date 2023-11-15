@@ -42,8 +42,8 @@ try:
         print("Procesando...")
 
         if accion == 'gn':
-            result = generarNumero()
-            resp = f'00007aturp{result}'.encode()
+            result = generarNumero(parametros)
+            resp = f'00009aturp{result}'.encode()
 
         if accion == 'an':
             result = avanzarNumero()

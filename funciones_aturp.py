@@ -8,9 +8,36 @@ def obtenerIDPaciente(rut, archivo_pacientes='./DB/pacientes.csv'):
                 return fila[0]  # Retorna el ID del paciente
     return None  # Retorna None si no encuentra el RUT
 
-def generarNumero():
-    numero = 1
-    return numero
+def obtenerIDPaciente(rut, archivo_pacientes='./DB/pacientes.csv'):
+    with open(archivo_pacientes, 'r') as archivo:
+        csv_reader = csv.reader(archivo, delimiter='|')
+        for fila in csv_reader:
+            if fila[1] == rut:
+                return fila[0]  # Retorna la ID del paciente
+    return None  # Retorna None si no encuentra el RUT
+
+def generarNumero(rut):
+    id_paciente = obtenerIDPaciente(rut)
+    if id_paciente is None:
+        return "Paciente no registrado"
+
+    turnos = []
+    with open('./DB/turnos.csv', 'r') as archivo_turnos:
+        csv_reader = csv.DictReader(archivo_turnos, delimiter='|')
+        for fila in csv_reader:
+            if fila['id_paciente'] == id_paciente:
+                turnos.append(int(fila['turno']))
+
+    if turnos:
+        turno_asignado = max(turnos)
+        return f"Ya tienes un número, tu turno es {turno_asignado}"
+    else:
+        nuevo_turno = max(turnos, default=0) + 1
+        with open('./DB/turnos.csv', 'a', newline='') as archivo_turnos:
+            csv_writer = csv.writer(archivo_turnos, delimiter='|')
+            csv_writer.writerow([len(turnos) + 1, id_paciente, nuevo_turno, 'esperando'])
+        return f"Tu turno es {nuevo_turno}"
+
 
 def avanzarNumero(archivo_turnos='./DB/turnos.csv'):
     menor_turno = None

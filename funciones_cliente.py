@@ -34,6 +34,12 @@ def menuPrincipal():
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
 
+def menuPaciente():
+    print("1. Avisar llegada")
+    print("0. Salir de sistema")
+    opcion = input("Ingrese el número de la opción que desea: ")
+    return opcion
+
 
 def menuGmeds():
     print("Gestión de médicos")
