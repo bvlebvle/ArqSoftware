@@ -1,5 +1,5 @@
-id|rut|nombre|apellido|especialidad
-1|1000|valentina|diaz|GENERAL
+id|rut|nombre|apellido|especialidad|box
+1|1000|valentina|diaz|GENERAL|1
 2|123456789|JUAN|PEREZ|TRAUMATOLOGIA
 3|12345678K|PEDRO|RODRIGUEZ|CARDIOLOGIA
 4|1234567-8|MARIA|GONZALEZ|PEDIATRIA

@@ -25,6 +25,8 @@ def menuPrincipal():
     print("4. Ranking de médicos")
     print("5. Visualizar agenda de médicos")
     print("6. Generar monto a pagar por consulta")
+    print("7. Gestión de boxs")
+    print("8. Segimiento de médicos")
     print("0. Salir de sistema")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
@@ -97,3 +99,32 @@ def menuGcobr():
 data = ["cr", "nombre", "apellido", "especialidad"]
 servicio = "crmed"
 crearMsg(data, servicio)
+
+
+def menuHpacs():
+    print("Historial de pacientes")
+    print("Puede escoger entre los siguientes servicios:")
+    print("1. ver historial de paciente")
+    print("2. editar historial de paciente")
+    print("3. eliminar historial de paciente")
+    print("4. Volver al menú principal")
+    opcion = input("Ingrese el número de la opción que desea: ")
+    return opcion
+
+
+def menuGboxs():
+    print("Gestión de boxs")
+    print("Puede escoger entre las siguientes opciones:")
+    print("1. Crear box")
+    print("2. Asignar box")
+    print("3. Volver al menú principal")
+    accion = input("Ingrese el número de la opción que desea: ")
+    return accion
+
+
+def menuSmeds():
+    print("Puede escoger entre las siguientes opciones:")
+    print("1. Horas trabajadas por medico")
+    print("2. Volver al menú principal")
+    accion = input("Ingrese el número de la opción que desea: ")
+    return accion
