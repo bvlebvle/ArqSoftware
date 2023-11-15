@@ -377,6 +377,58 @@ while True:
                 enviarMsg(msg.encode())
             if accion == "2":
                 break
+    if opcion == "10":
+        while True:
+            accion = menuHmeds()
+            servicio = "hmeds"
+            if accion == "1":
+                data = []
+                print("Ver historial médico")
+                rut = input("Ingrese rut de médico: ")
+                data.append("vr")
+                data.append(rut)
+                print(data)
+                msg = crearMsg(data, servicio)
+                # Envía mensaje a través del bus
+                enviarMsg(msg.encode())
+            if accion == "2":
+                print("Editar historial de médico")
+                rut = input("Ingrese RUT del médico: ")
+                fecha_antigua_dia = input("Ingrese día actual de la cita: ")
+                fecha_antigua_mes = input("Ingrese mes actual de la cita: ")
+                fecha_antigua_hora = input("Ingrese hora actual de la cita: ")
+                fecha_nueva_dia = input("Ingrese día nuevo de la cita: ")
+                fecha_nueva_mes = input("Ingrese mes nuevo de la cita: ")
+                fecha_nueva_hora = input("Ingrese hora nueva de la cita: ")
+                data.append("ed")
+                data.append(rut)
+                data.append(fecha_antigua_dia)
+                data.append(fecha_antigua_mes)
+                data.append(fecha_antigua_hora)
+                data.append(fecha_nueva_dia)
+                data.append(fecha_nueva_mes)
+                data.append(fecha_nueva_hora)
+                msg = crearMsg(data, servicio)
+                # Envía el mensaje a través del bus
+                enviarMsg(msg.encode())
+            if accion == "3":
+                data = []
+                print("Eliminar historial médico")
+                rut = input("Ingrese rut de médico: ")
+                data.append("el")
+                data.append(rut)
+                msg = crearMsg(data, servicio)
+                # Envía mensaje a través del bus
+                enviarMsg(msg.encode())
+            if accion == "4":
+                break
+    if opcion == "12":
+        servicio = "aturp"
+        data.append("an")
+        msg = crearMsg(data, servicio)
+        enviarMsg(msg.encode())
+        
+
     if opcion == "0":
         print("Saliendo del sistema")
         sock.close()

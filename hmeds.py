@@ -1,32 +1,26 @@
 import socket
-# Asegúrate de importar las funciones necesarias para manejar el historial de pacientes
-from funciones_hpacs import *
+from funciones_hmeds import *
 from funciones_cliente import *
 
-# Crear un socket TCP/IP
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Conectar el socket al puerto donde el servidor está escuchando
 server_address = ('localhost', 5001)
 print('connecting to {} port {}'.format(*server_address))
 sock.connect(server_address)
 
 try:
-    # Inscribir servicio en el bus, se hace para cada servicio
-    # Los últimos 5 caracteres son el nombre del servicio
-    message = b'00010sinithpcss'
+    message = b'00011sinithmeds'  # Ajustar el tamaño y el nombre del servicio
     print('sending {!r}'.format(message))
     sock.sendall(message)
+    
     amount_received = 0
     amount_expected = int(sock.recv(5))
     print(amount_expected)
-    # Leer respuesta de bus cuando hace el snit
     while amount_received < amount_expected:
         data = sock.recv(amount_expected - amount_received)
         amount_received += len(data)
         print('received {!r}'.format(data))
     
-    # Esperar mensaje para el servicio
     while True:
         print("Waiting for transaction")
         amount_received = 0
@@ -43,28 +37,32 @@ try:
         print(parametros)
         resp = b''
         print("Processing ...")
-        if accion == 'vr':
-            result = verHistorialPaciente(parametros)
+        
+        if accion == 'vr':  # Ver historial médico
+            # Aquí llamas a la función de ver historial médico con los parámetros adecuados
+            result = verHistorialMedico(parametros)
             respuesta_historial = str(result)
-            # Formar el mensaje con longitud y contenido
             longitud_respuesta = len(respuesta_historial)
-            mensaje_respuesta = f"{longitud_respuesta:05d}hpcss" + respuesta_historial
-            # Codificar y enviar
-            resp = mensaje_respuesta.encode() 
-        if accion == 'el':
-            result = eliminarHistorialPaciente(parametros)
-            if result: 
-                resp = b'00014hpcssEliminado'
-            else: 
-                resp = b'00016hpcssNoEliminado'
-        if accion == 'ed':
-            print("parametros: ", parametros)
-            result = editarHistorialPaciente(parametros)
-            if result: 
-                resp = b'00012hpcssEditado'
-            else: 
-                resp = b'00014hpcssNoEditado'        
+            mensaje_respuesta = f"{longitud_respuesta:05d}hmeds" + respuesta_historial
+            resp = mensaje_respuesta.encode()
+            
+        if accion == 'el':  # Eliminar historial médico
+            result = eliminarHistorialMedico(parametros)
+            if result:
+                resp = b'00014hmedsEliminado'
+            else:
+                resp = b'00016hmedsNoEliminado'
 
+        if accion == 'ed':
+            # Realizar acción para editar historial médico
+            result = editarHistorialMedico(parametros)  # Manejar adecuadamente los parámetros
+            
+            if result:
+                resp = b'00012hmedsEditado'
+            else:
+                resp = b'00014hmedsNoEditado' 
+    
+        
         print('sending {!r}'.format(resp))
         sock.sendall(resp)
 
