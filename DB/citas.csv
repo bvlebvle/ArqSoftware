@@ -1,6 +1,3 @@
 id|id_paciente|id_medico|dia_semana|dia|mes|hora|estado|monto|
-<<<<<<< HEAD
-2|2|1|24|11|12:00|11:00|AGENDADA|5.590
-=======
-1|1|1|LUNES|10|10|10:00|AGENDADA|5.590
->>>>>>> 675a285e5cc4ccf6b33980d377ea879a31f3dcd8
+1|1|1|24|11|12:00|11:00|AGENDADA|5.590
+1|1|1|24|11|12:00|11:00|AGENDADA|5.590

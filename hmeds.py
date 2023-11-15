@@ -46,7 +46,7 @@ try:
             mensaje_respuesta = f"{longitud_respuesta:05d}hmeds" + respuesta_historial
             resp = mensaje_respuesta.encode()
             
-        elif accion == 'el':  # Eliminar historial médico
+        if accion == 'el':  # Eliminar historial médico
             result = eliminarHistorialMedico(parametros)
             if result:
                 resp = b'00014hmedsEliminado'

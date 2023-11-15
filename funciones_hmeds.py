@@ -54,7 +54,6 @@ def eliminarHistorialMedico(rut, archivo_citas='./DB/citas.csv', archivo_medicos
     
     return eliminado
 
-import csv
 
 def editarHistorialMedico(parametros, archivo_citas='./DB/citas.csv', archivo_medicos='./DB/medicos.csv'):
     print("Estoy editando")
