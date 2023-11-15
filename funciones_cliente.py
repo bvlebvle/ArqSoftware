@@ -29,6 +29,7 @@ def menuPrincipal():
     print("8. Gestión de boxs")
     print("9. Segimiento de médicos")
     print("10. Historial para médicos")
+    print("12. Siguiente turno")
     print("0. Salir de sistema")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion

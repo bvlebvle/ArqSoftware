@@ -422,6 +422,13 @@ while True:
                 enviarMsg(msg.encode())
             if accion == "4":
                 break
+    if opcion == "12":
+        servicio = "aturp"
+        data.append("an")
+        msg = crearMsg(data, servicio)
+        enviarMsg(msg.encode())
+        
+
     if opcion == "0":
         print("Saliendo del sistema")
         sock.close()
