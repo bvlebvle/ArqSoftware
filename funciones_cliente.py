@@ -28,6 +28,7 @@ def menuPrincipal():
     print("7. Historial de pacientes")
     print("8. Gestión de boxs")
     print("9. Segimiento de médicos")
+    print("10. Historial para médicos")
     print("0. Salir de sistema")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
@@ -129,3 +130,14 @@ def menuSmeds():
     print("2. Volver al menú principal")
     accion = input("Ingrese el número de la opción que desea: ")
     return accion
+
+
+def menuHmeds():
+    print("Historial para médicos")
+    print("Puede escoger entre las siguientes opciones:")
+    print("1. Ver historial médico de un médico")
+    print("2. Editar historial médico de un médico")
+    print("3. Eliminar historial médico de un médico")
+    print("4. Volver al menú principal")
+    opcion = input("Ingrese el número de la opción que desea: ")
+    return opcion
