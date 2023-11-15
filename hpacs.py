@@ -39,8 +39,6 @@ try:
       
         accion = data.decode()[5:7]
         parametros = data.decode()[8:]
-        print(accion)
-        print(parametros)
         resp = b''
         print("Processing ...")
         if accion == 'vr':
