@@ -21,22 +21,30 @@ def generarNumero(rut):
     if id_paciente is None:
         return "Paciente no registrado"
 
-    turnos = []
     with open('./DB/turnos.csv', 'r') as archivo_turnos:
         csv_reader = csv.DictReader(archivo_turnos, delimiter='|')
         for fila in csv_reader:
             if fila['id_paciente'] == id_paciente:
-                turnos.append(int(fila['turno']))
+                return f"Ya tienes un número, tu turno es {fila['turno']}"
 
-    if turnos:
-        turno_asignado = max(turnos)
-        return f"Ya tienes un número, tu turno es {turno_asignado}"
-    else:
-        nuevo_turno = max(turnos, default=0) + 1
-        with open('./DB/turnos.csv', 'a', newline='') as archivo_turnos:
-            csv_writer = csv.writer(archivo_turnos, delimiter='|')
-            csv_writer.writerow([len(turnos) + 1, id_paciente, nuevo_turno, 'esperando'])
-        return f"Tu turno es {nuevo_turno}"
+    # Si la ID del paciente no se encuentra en el archivo, se procede a asignar un nuevo turno
+    turnos = []
+    with open('./DB/turnos.csv', 'r') as archivo_turnos:
+        csv_reader = csv.DictReader(archivo_turnos, delimiter='|')
+        for fila in csv_reader:
+            turnos.append(int(fila['turno']))
+
+    nuevo_turno = max(turnos, default=0) + 1
+
+    with open('./DB/turnos.csv', 'a', newline='') as archivo_turnos:
+        csv_writer = csv.writer(archivo_turnos, delimiter='|')
+        if not turnos:
+            nuevo_id = 1
+        else:
+            nuevo_id = max(int(row['id']) for row in csv.DictReader(open('./DB/turnos.csv', 'r'), delimiter='|')) + 1
+        csv_writer.writerow([nuevo_id, id_paciente, nuevo_turno, 'esperando'])
+
+    return f"Tu turno es {nuevo_turno}"
 
 
 def avanzarNumero(archivo_turnos='./DB/turnos.csv'):
