@@ -25,8 +25,9 @@ def menuPrincipal():
     print("4. Ranking de médicos")
     print("5. Visualizar agenda de médicos")
     print("6. Generar monto a pagar por consulta")
-    print("7. Gestión de boxs")
-    print("8. Segimiento de médicos")
+    print("7. Historial de pacientes")
+    print("8. Gestión de boxs")
+    print("9. Segimiento de médicos")
     print("0. Salir de sistema")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion

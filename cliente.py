@@ -287,6 +287,8 @@ while True:
                 data.append(rutM)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
+    if opcion == "7":
+        while True:
             accion = menuHpacs()
             servicio = "hpcss"
             if accion == "1":
@@ -331,7 +333,7 @@ while True:
                 enviarMsg(msg.encode())
             if accion == "4":
                 break
-    if opcion == "7":
+    if opcion == "8":
         while True:
             accion = menuGboxs()
             servicio = "gboxs"
@@ -359,7 +361,7 @@ while True:
                 enviarMsg(msg.encode())
             if accion == "3":
                 break
-    if opcion == "8":
+    if opcion == "9":
         # realiza el munu para smeds
         while True:
             accion = menuSmeds()
