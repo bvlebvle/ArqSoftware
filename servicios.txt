@@ -23,11 +23,19 @@ Nombres de servicios
 vale
 4. Ranking de médicos - rmeds
 	Definición de data: 
-		- Obtener ranking según cantidad de citas de todos los médicos: r-citas
-		- obtener ranking según cantidad de citas de una especialidad : r-citas-especialidad
+		- Obtener ranking según cantidad de citas de todos los médicos: rg
+		- obtener ranking según cantidad de citas de especialidades : re
 
 5. Visualización de médicos - vmeds
+	Definición de data:
+		- Obtener visualización diaria de los medicos: vd-dia-mes
+		- Obtener visualización semanal de los medicos: vs-dia-mes
+		- Obtener visualización dia de un medico: dm-rutM-dia-mes-nombreM-apellidoM
+		- Obtener visualización semanal de un medico: sm-rutM-dia-mes-nombreM-apellidoM
+
 6. Gestión de cobros - gcobr
+	Definición de data:
+		- Generar cobro: gr-rutM
 
 ---------------------------------------------
 kevin

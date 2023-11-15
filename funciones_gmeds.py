@@ -29,9 +29,9 @@ def obtenerParametros(parametros):
             pos_caracter.append(i)
 
     rut = parametros[0:pos_caracter[0]]
-    nombre = parametros[pos_caracter[0]+1:pos_caracter[1]]
-    apellido = parametros[pos_caracter[1]+1:pos_caracter[2]]
-    especialidad = parametros[pos_caracter[2]+1:]
+    nombre = parametros[pos_caracter[0]+1:pos_caracter[1]].upper()
+    apellido = parametros[pos_caracter[1]+1:pos_caracter[2]].upper()
+    especialidad = parametros[pos_caracter[2]+1:].upper()
     return rut, nombre, apellido, especialidad
 
 
@@ -56,7 +56,6 @@ def crearMedico(parametros):
 
     # Verificar si el médico ya existe
     if doctor_existe(rut):
-        # print(f"El médico {nombre} {apellido} ya existe en el archivo.")
         return False
     else:
         # Agregar el médico al archivo CSV
@@ -113,3 +112,7 @@ def editarMedico(parametros):
     else:
         print(f"El médico {nombre} {apellido} no existe en el archivo.")
         return False
+
+
+parametros = "123456789-Juan-Perez-Traumatologia"
+crearMedico(parametros)

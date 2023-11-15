@@ -2,20 +2,21 @@ import socket
 from funciones_gmeds import *
 from funciones_cliente import *
 # Create a TCP/IP socket
-sock = socket.socket (socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect the socket to the port where the server is listening
 server_address = ('localhost', 5001)
-print ('connecting to {} port {}'.format (*server_address))
-sock.connect (server_address)
+print('connecting to {} port {}'.format(*server_address))
+sock.connect(server_address)
+
 
 def enviarMsg(message):
     try:
-        #enviar mensaje
-        #print ('sending {!r}'.format (message))
-        sock.sendall (message)
-        
-        #recibir mensaje
+        # enviar mensaje
+        # print ('sending {!r}'.format (message))
+        sock.sendall(message)
+
+        # recibir mensaje
         response_len_str = sock.recv(5).decode()
         response_len = int(response_len_str)
         response_service = sock.recv(5).decode()
@@ -23,23 +24,24 @@ def enviarMsg(message):
 
         print(f"Received: {response_data}")
     finally:
-        #print ('closing socket')
-        #sock.close ()
+        # print ('closing socket')
+        # sock.close ()
         return response_data
+
 
 print("Sistema de gestión de Centro Médico JRG")
 
 
 data = []
 while True:
-    #menu principal esta en una funcion de clientes
+    # menu principal esta en una funcion de clientes
     print("")
     opcion = menuPrincipal()
     print("")
-    #hay un while true por cada opcion del menu principal
+    # hay un while true por cada opcion del menu principal
     if opcion == "1":
         while True:
-            #menu de gestion de medicos esta en una funcion de clientes
+            # menu de gestion de medicos esta en una funcion de clientes
             accion = menuGmeds()
             servicio = "gmeds"
             if accion == "1":
@@ -55,22 +57,23 @@ while True:
                 data.append(apellido)
                 data.append(especialidad)
                 msg = crearMsg(data, servicio)
-                #envia mensaje a traves del bus
+                # envia mensaje a traves del bus
                 enviarMsg(msg.encode())
-            if accion =="2":
+            if accion == "2":
                 data = []
                 print("Edición de médico")
                 rut = input("Ingrese rut de médico: ")
                 new_nombre = input("Ingrese nuevo nombre de médico: ")
                 new_apellido = input("Ingrese nuevo apellido de médico: ")
-                new_especialidad = input("Ingrese nuevo especialidad de médico: ")
+                new_especialidad = input(
+                    "Ingrese nuevo especialidad de médico: ")
                 data.append("ed")
                 data.append(rut)
                 data.append(new_nombre)
                 data.append(new_apellido)
                 data.append(new_especialidad)
                 msg = crearMsg(data, servicio)
-                #envia mensaje a traves del bus
+                # envia mensaje a traves del bus
                 enviarMsg(msg.encode())
             if accion == "3":
                 data = []
@@ -79,12 +82,12 @@ while True:
                 data.append("el")
                 data.append(rut)
                 msg = crearMsg(data, servicio)
-                #envia mensaje a traves del bus
+                # envia mensaje a traves del bus
                 enviarMsg(msg.encode())
             if accion == "4":
                 break
     if opcion == "2":
-        while True: 
+        while True:
             servicio = "crhor"
             accion = menuCrhor()
             if accion == "1":
@@ -100,9 +103,9 @@ while True:
                 data.append(hora_inicio)
                 data.append(hora_fin)
                 msg = crearMsg(data, servicio)
-                #envia mensaje a traves del bus
+                # envia mensaje a traves del bus
                 enviarMsg(msg.encode())
-            if accion =="2":
+            if accion == "2":
                 data = []
                 print("Edición de horario")
                 rut = input("Ingrese rut de médico: ")
@@ -121,7 +124,7 @@ while True:
                 data.append(hora_inicio_nueva)
                 data.append(hora_fin_nueva)
                 msg = crearMsg(data, servicio)
-                #envia mensaje a traves del bus
+                # envia mensaje a traves del bus
                 enviarMsg(msg.encode())
             if accion == "3":
                 data = []
@@ -136,11 +139,11 @@ while True:
                 data.append(hora_inicio)
                 data.append(hora_fin)
                 msg = crearMsg(data, servicio)
-                #envia mensaje a traves del bus
+                # envia mensaje a traves del bus
                 enviarMsg(msg.encode())
             if accion == "4":
                 break
-    if opcion == "3": 
+    if opcion == "3":
         while True:
             accion = menuGcita()
             servicio = "gcita"
@@ -163,10 +166,10 @@ while True:
                 data.append(mes)
                 data.append(hora)
                 msg = crearMsg(data, servicio)
-                #envia mensaje a traves del bus
-                enviarMsg(msg.encode())     
+                # envia mensaje a traves del bus
+                enviarMsg(msg.encode())
 
-            if accion == "2": 
+            if accion == "2":
                 data = []
                 print("Edición de cita")
                 rutP = input("Ingrese rut de paciente: ")
@@ -187,9 +190,9 @@ while True:
                 data.append(mes_nuevo)
                 data.append(hora_nueva)
                 msg = crearMsg(data, servicio)
-                #envia mensaje a traves del bus
+                # envia mensaje a traves del bus
                 enviarMsg(msg.encode())
-            
+
             if accion == "3":
                 data = []
                 print("Eliminación de cita")
@@ -205,15 +208,90 @@ while True:
                 data.append(mes)
                 data.append(hora)
                 msg = crearMsg(data, servicio)
-                
-                #envia mensaje a traves del bus
+
+                # envia mensaje a traves del bus
                 enviarMsg(msg.encode())
             if accion == "4":
                 break
+    if opcion == "4":
+        while True:
+            accion = menuRmeds()
+            servicio = "rmeds"
+            if accion == "1":
+                data = []
+                print("Ranking general de médicos")
+                data.append("rg")
+                msg = crearMsg(data, servicio)
+                # envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "2":
+                data = []
+                print("Ranking de médicos por especialidad")
+                data.append("re")
+                msg = crearMsg(data, servicio)
+                # envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "3":
+                break
+    if opcion == "5":
+        while True:
+            accion = menuVmeds()
+            servicio = "vmeds"
+            if accion == "1":
+                data = []
+                print("Agenda diaria de todos los médicos")
+                data.append("vd")
+                msg = crearMsg(data, servicio)
+                # envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "2":
+                data = []
+                print("Agenda semanal de todos los médicos")
+                data.append("vs")
+                msg = crearMsg(data, servicio)
+                # envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "3":
+                data = []
+                print("Agenda diaria de un médico")
+                nombre = input("Ingrese nombre de médico: ")
+                apellido = input("Ingrese apellido de médico: ")
+                data.append("dm")
+                data.append(nombre)
+                data.append(apellido)
+                msg = crearMsg(data, servicio)
+                # envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "4":
+                data = []
+                print("Agenda semanal de un médico")
+                nombre = input("Ingrese nombre de médico: ")
+                apellido = input("Ingrese apellido de médico: ")
+                data.append("sm")
+                data.append(nombre)
+                data.append(apellido)
+                msg = crearMsg(data, servicio)
+                # envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "5":
+                break
+
+    if opcion == "6":
+        while True:
+            accion = menuGcobr()
+            servicio = "gcobr"
+            if accion == "1":
+                data = []
+                print("Monto a pagar por consulta")
+                rutM = input("Ingrese rut de médico: ")
+                data.append("gc")
+                data.append(rutM)
+                msg = crearMsg(data, servicio)
+                # envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "2":
+                break
     if opcion == "0":
         print("Saliendo del sistema")
-        sock.close ()
+        sock.close()
         break
-
-
-    

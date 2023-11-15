@@ -1,5 +1,6 @@
 import socket
-from funciones_gcita import *
+from funciones_gcobr import agregarCobro
+from funciones_gmeds import *
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -11,7 +12,7 @@ sock.connect(server_address)
 try:
     # inscribir servicio en el bus, se hace para cada servicio
     # los ultimos 5 caracteres son el nombre del servicio
-    message = b'00010sinitgcita'
+    message = b'00010sinitgcobr'
     print('sending {!r}'.format(message))
     sock.sendall(message)
 
@@ -37,29 +38,14 @@ try:
 
         accion = data.decode()[5:7]
         parametros = data.decode()[8:]
-        print("La accion es: ", accion)
-        print("Parametros", parametros)
+        print(accion)
+        print(parametros)
         resp = b''
         print("Processing ...")
 
-        if accion == 'cr':
-            result = crearCita(parametros)
-            if result:
-                resp = b'00015gcitaCitaCreada'
-            else:
-                resp = b'00017gcitaCitaNoCreado'
-        if accion == 'el':
-            result = eliminarCita(parametros)
-            if result:
-                resp = b'00018gcitaCitaEliminado'
-            else:
-                resp = b'00020gcitaCitaNoEliminado'
-        if accion == 'ed':
-            result = editarCita(parametros)
-            if result:
-                resp = b'00016gcitaCitaEditada'
-            else:
-                resp = b'00018gcitaCitaNoEditada'
+        if accion == 'gc':
+            result = agregarCobro(parametros)
+            resp = b'00007gcobrOK'
 
         print('sending {!r}'.format(resp))
         sock.sendall(resp)

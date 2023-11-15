@@ -1,5 +1,5 @@
 import socket
-from funciones_gcita import *
+from funciones_vmeds import *
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -11,7 +11,7 @@ sock.connect(server_address)
 try:
     # inscribir servicio en el bus, se hace para cada servicio
     # los ultimos 5 caracteres son el nombre del servicio
-    message = b'00010sinitgcita'
+    message = b'00010sinitvmeds'
     print('sending {!r}'.format(message))
     sock.sendall(message)
 
@@ -41,26 +41,31 @@ try:
         print("Parametros", parametros)
         resp = b''
         print("Processing ...")
+        print("")
+        print("")
 
-        if accion == 'cr':
-            result = crearCita(parametros)
+        fecha = datetime.datetime.now()
+        dia = fecha.day
+        mes = fecha.month
+        if accion == 'vd':
+            result = visualizarAgendaDiaria(dia, mes, "")
             if result:
-                resp = b'00015gcitaCitaCreada'
-            else:
-                resp = b'00017gcitaCitaNoCreado'
-        if accion == 'el':
-            result = eliminarCita(parametros)
+                resp = b'00017vmedsAgendaDiaria'
+        if accion == 'vs':
+            result = visualizarAgendaSemana(dia, mes, "")
             if result:
-                resp = b'00018gcitaCitaEliminado'
-            else:
-                resp = b'00020gcitaCitaNoEliminado'
-        if accion == 'ed':
-            result = editarCita(parametros)
+                resp = b'00018vmedsAgendaSemanal'
+        if accion == 'dm':
+            result = visualizarAgendaDiaria(dia, mes, parametros)
             if result:
-                resp = b'00016gcitaCitaEditada'
-            else:
-                resp = b'00018gcitaCitaNoEditada'
+                resp = b'00025vmedsAgendaDiariaDeMedico'
+        if accion == 'sm':
+            result = visualizarAgendaSemana(dia, mes, parametros)
+            if result:
+                resp = b'00026vmedsAgendaSemanalDeMedico'
 
+        print("")
+        print("")
         print('sending {!r}'.format(resp))
         sock.sendall(resp)
 

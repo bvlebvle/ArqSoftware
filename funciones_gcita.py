@@ -1,4 +1,5 @@
 import datetime
+from funciones_gcobr import *
 from funciones_gmeds import *
 from funciones_crhor import *
 from funciones_gpacs import *
@@ -104,6 +105,7 @@ def crearCita(parametros):
     if id_horario == 0:
         print("Horario no existe")
         return False
+
     # verificar si horario esta disponible
     id_cita = obtenerIdCita(id_paciente, id_medico, fecha_dia, mes, hora)
     if id_cita != 0:
@@ -115,7 +117,11 @@ def crearCita(parametros):
         ultimo_id = obtener_ultimo_id(archivo_csv)
         id_cita = ultimo_id + 1
         estado = "AGENDADA"
-        monto = 0
+
+        # agregar cobro
+        agregarCobro(rutM)
+        monto = obtenerMonto(id_medico)
+        print("Monto: ", monto)
         nueva_cita = [id_cita, id_medico, id_paciente, dia_semana,
                       fecha_dia, mes, hora, estado, monto]
         with open(archivo_csv, 'a', newline='') as archivo:
@@ -222,10 +228,10 @@ def editarCita(parametros):
         return False
 
 
-# parametros = "1111-1000-23-10-11:00"
+parametros = "1111-1000-23-10-11:00"
 # eliminar = "1111-1000-23-10-11:00"
 # print(obtenerParametros(parametros))
-# crearCita(parametros)
+crearCita(parametros)
 # eliminarCita(eliminar)
 # parametros_editar = "1111-1000-23-10-11:00-23-10-10:30"
 # print(obtenerParametrosEditar(parametros_editar))
