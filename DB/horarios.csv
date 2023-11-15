@@ -1,5 +1,5 @@
 id| idMedico|dia|horaInicio|horaFin|disponible
 1|1|LUNES|10:00|10:30|False
 2|1|LUNES|10:30|11:00|False
-3|1|LUNES|11:00|11:30|True
-4|1|LUNES|11:30|12:00|True
+3|1|LUNES|11:00|11:30|False
+4|1|LUNES|11:30|12:00|False

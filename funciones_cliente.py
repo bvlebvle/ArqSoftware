@@ -22,6 +22,9 @@ def menuPrincipal():
     print ("1. Gestión de médicos")
     print ("2. Gestión de horarios de médicos") 
     print ("3. Gestión de citas")
+    print ("4. Historial de pacientes")
+    print ("5. Gestión de boxs")
+    print ("6. Segimiento de médicos")
     print("0. Salir de sistema")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
@@ -59,3 +62,30 @@ def menuGcita():
 data=["cr","nombre", "apellido", "especialidad"]
 servicio = "crmed"
 crearMsg(data, servicio)
+
+def menuHpacs():
+    print("Historial de pacientes")
+    print("Puede escoger entre los siguientes servicios:")
+    print ("1. ver historial de paciente")
+    print ("2. editar historial de paciente")
+    print ("3. eliminar historial de paciente")
+    print ("4. Volver al menú principal")
+    opcion = input("Ingrese el número de la opción que desea: ")
+    return opcion
+
+def menuGboxs():
+    print("Gestión de boxs")
+    print("Puede escoger entre las siguientes opciones:")
+    print("1. Crear box")
+    print("2. Asignar box")
+    print ("3. Volver al menú principal")
+    accion = input("Ingrese el número de la opción que desea: ")
+    return accion
+
+def menuSmeds():
+    print("Puede escoger entre las siguientes opciones:")
+    print("1. Horas trabajadas por medico")
+    print ("2. Volver al menú principal")
+    accion = input("Ingrese el número de la opción que desea: ")
+    return accion
+

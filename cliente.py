@@ -21,7 +21,7 @@ def enviarMsg(message):
         response_service = sock.recv(5).decode()
         response_data = sock.recv(response_len - 5).decode()
 
-        print(f"Received: {response_data}")
+        print(f"Received: {response_data} ")
     finally:
         #print ('closing socket')
         #sock.close ()
@@ -209,6 +209,96 @@ while True:
                 #envia mensaje a traves del bus
                 enviarMsg(msg.encode())
             if accion == "4":
+                break
+    if opcion == "4":
+        while True:
+            accion = menuHpacs()
+            servicio = "hpcss"
+            if accion == "1":
+                data = []
+                print("Ver historial de paciente")
+                rut = input("Ingrese rut de paciente: ")
+                data.append("vr")
+                data.append(rut)
+                print(data)
+                msg = crearMsg(data, servicio)
+                #envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "2":
+                data = []
+                print("Editar historial de paciente")
+                rut = input("Ingrese rut de paciente: ")
+                fecha_antigua_dia = input("Ingrese dia actual de la cita: ")
+                fecha_antigua_mes = input("Ingrese mes actual de la cita: ")
+                fecha_antigua_hora = input("Ingrese hora actual de la cita: ")
+                fecha_nueva_dia = input("Ingrese dia nuevo de la cita: ")
+                fecha_nueva_mes = input("Ingrese mes nuevo de la cita: ")
+                fecha_nueva_hora = input("Ingrese hora nuevo de la cita: ")
+                data.append("ed")
+                data.append(rut)
+                data.append(fecha_antigua_dia)
+                data.append(fecha_antigua_mes)
+                data.append(fecha_antigua_hora)
+                data.append(fecha_nueva_dia)
+                data.append(fecha_nueva_mes)
+                data.append(fecha_nueva_hora)
+                msg = crearMsg(data, servicio)
+                #envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "3":
+                data = []
+                print("Eliminar historial de paciente")
+                rut = input("Ingrese rut de paciente: ")
+                data.append("el")
+                data.append(rut)
+                msg = crearMsg(data, servicio)
+                #envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "4":
+                break
+    if opcion == "5":
+        while True:
+            accion = menuGboxs()
+            servicio = "gboxs"
+            if accion == "1":
+                data = []
+                print("Crear box")
+                numero_box = input("Ingrese numero de box: ")
+                piso = input("Ingrese piso de box: ")
+                data.append("cr")
+                data.append(numero_box)
+                data.append(piso)
+                msg = crearMsg(data, servicio)
+                #envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "2":
+                data = []
+                print("asignar box")
+                rut = input("rut del medico: ")
+                box = input("id de box asignado: ")
+                data.append("as")
+                data.append(rut)
+                data.append(box)
+                msg = crearMsg(data, servicio)
+                #envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "3":
+                break
+    if opcion == "6":
+        #realiza el munu para smeds 
+        while True:
+            accion = menuSmeds()
+            servicio = "smeds"
+            if accion == "1":
+                data = []
+                print("Ver horas trabajadas")
+                rut = input("Ingrese rut de médico: ")
+                data.append("ht")
+                data.append(rut)
+                msg = crearMsg(data, servicio)
+                #envia mensaje a traves del bus
+                enviarMsg(msg.encode())
+            if accion == "2":
                 break
     if opcion == "0":
         print("Saliendo del sistema")
