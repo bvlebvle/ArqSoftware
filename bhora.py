@@ -42,6 +42,11 @@ try:
             # Aquí llamas a la función correspondiente con los parámetros adecuados
             result = bloquearHoras(parametros)
             resp = f'00009bhora{result}'.encode()
+
+        if accion == 'dh':  # Bloqueo de horas
+            # Aquí llamas a la función correspondiente con los parámetros adecuados
+            result = desbloquearHoras(parametros)
+            resp = f'00009bhora{result}'.encode()
         
         print('Sending {!r}'.format(resp))
         sock.sendall(resp)
