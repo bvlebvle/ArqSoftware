@@ -24,8 +24,6 @@ def verHistorialPaciente(rut, archivo_citas='./DB/citas.csv', archivo_pacientes=
         for fila in csv_reader:
             if len(fila) >= 9 and fila[1] == id_paciente:
                 historial.append({
-                    'id_paciente': fila[1],
-                    'id_medico': fila[2],
                     'dia_semana': fila[3],
                     'dia': fila[4],
                     'mes': fila[5],
