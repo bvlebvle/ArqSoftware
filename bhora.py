@@ -40,11 +40,8 @@ try:
         
         if accion == 'bh':  # Bloqueo de horas
             # Aquí llamas a la función correspondiente con los parámetros adecuados
-            result = bloquearHoras(parametros)  # Ajusta esta llamada según tu lógica
-            if result:
-                resp = f'00009aturp{result}'.encode()
-            else:
-                resp = b'00013bhoraNoBloqueado'
+            result = bloquearHoras(parametros)
+            resp = f'00009bhora{result}'.encode()
         
         print('Sending {!r}'.format(resp))
         sock.sendall(resp)

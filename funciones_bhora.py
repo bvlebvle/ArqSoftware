@@ -16,22 +16,22 @@ def bloquearHoras(parametros, archivo_horarios='./DB/horarios.csv'):
     print
     id_medico = obtenerIDMedico(rut)
     if id_medico is None:
-        print("No existe medico")
-        return False
+        print("Médico no encontrado.")
+        return f"Medico no encontrado"
 
     with open(archivo_horarios, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         horarios = list(csv_reader)
         
     for horario in horarios:
-        if horario[0] == id_medico and horario[1] == dia and horario[2] == horaInicio:
+        if horario[1] == id_medico and horario[2] == dia and horario[3] == horaInicio:
             if horario[3] == 'False':
-                return False
+                return "Este bloque ya está bloqueado"
             else:
-                horario[3] = 'False'
+                horario[5] = 'False'
                 with open(archivo_horarios, 'w', newline='') as archivo_actualizado:
                     csv_writer = csv.writer(archivo_actualizado, delimiter='|')
                     csv_writer.writerows(horarios)
-                return True
+                return "Bloqueado correctamente"
     
     return "Primero debe agregar bloque"
