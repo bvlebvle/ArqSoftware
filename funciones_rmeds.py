@@ -96,7 +96,6 @@ def rankingDoctoresEspecialidad():
                 linea = str(cont) + "- Cantidad de citas:" + \
                     str(medico[1]) + "- Dr." + nombre + apellido
                 result.append(linea)
-    return result
 
 
 # rankingDoctoresTodos()
