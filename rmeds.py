@@ -44,12 +44,10 @@ try:
 
         if accion == 'rg':
             result = rankingDoctoresTodos()
-            if result:
-                resp = b'00019rmedsRankingGeneral'
+            resp = b'00019rmedsRankingGeneral'
         if accion == 're':
             result = rankingDoctoresEspecialidad()
-            if result:
-                resp = b'00024rmedsRankingEspecialidad'
+            resp = b'00024rmedsRankingEspecialidad'
 
         print('sending {!r}'.format(resp))
         sock.sendall(resp)

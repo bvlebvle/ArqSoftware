@@ -63,19 +63,22 @@ def rankingDoctoresTodos():
     print("Ranking de doctores")
     cont = 1
     map_medicos = obtenerCitas()
+    result = []
     for id_medico, veces in map_medicos:
         if cont == 4:
             break
         nombre, apellido = obtenerNombreMedico(id_medico)
-        print(cont, "- Cantidad de citas:", veces, "- Dr.", nombre, apellido,)
+        linea = str(cont) + "- Cantidad de citas:" + \
+            str(veces) + "- Dr." + nombre + apellido
+        result.append(linea)
         cont += 1
-    return True
+    return result
 
 
 def rankingDoctoresEspecialidad():
     print("Ranking de doctores por especialidad")
     triada = triadaMedico()
-
+    result = []
     # separar por especialidad
     especialidades = []
     for medico in triada:
@@ -90,11 +93,10 @@ def rankingDoctoresEspecialidad():
             if medico[2] == especialidad:
                 id_medico = medico[0]
                 nombre, apellido = obtenerNombreMedico(id_medico)
-                print(cont, "- Cantidad de citas:",
-                      medico[1], "- Dr.", nombre, apellido)
-        print("")
-
-    return True
+                linea = str(cont) + "- Cantidad de citas:" + \
+                    str(medico[1]) + "- Dr." + nombre + apellido
+                result.append(linea)
+    return result
 
 
 # rankingDoctoresTodos()

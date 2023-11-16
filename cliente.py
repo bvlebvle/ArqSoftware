@@ -1,3 +1,4 @@
+import subprocess
 import socket
 from funciones_gmeds import *
 from funciones_cliente import *
@@ -10,10 +11,18 @@ print('connecting to {} port {}'.format(*server_address))
 sock.connect(server_address)
 
 
+def ejecutar_script(archivo):
+    script_path = "./" + archivo + ".py"
+    try:
+        subprocess.run(["python", script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error al ejecutar el script: {e}")
+
+
 def enviarMsg(message):
     try:
         # enviar mensaje
-        # print ('sending {!r}'.format (message))
+        print('sending {!r}'.format(message))
         sock.sendall(message)
 
         # recibir mensaje
@@ -44,6 +53,7 @@ while True:
             # menu de gestion de medicos esta en una funcion de clientes
             accion = menuGmeds()
             servicio = "gmeds"
+            # ejecutar_script(servicio)
             if accion == "1":
                 data = []
                 print("Creación de médico")
@@ -151,16 +161,12 @@ while True:
                 data = []
                 print("Creación de cita")
                 rutP = input("Ingrese rut de paciente: ")
-                nombreP = input("Ingrese nombre de paciente: ")
-                apellidoP = input("Ingrese apellido de paciente: ")
                 rutM = input("Ingrese rut de médico: ")
                 dia = input("Ingrese día de cita: ")
                 mes = input("Ingrese mes de cita: ")
                 hora = input("Ingrese hora de cita: ")
                 data.append("cr")
                 data.append(rutP)
-                data.append(nombreP)
-                data.append(apellidoP)
                 data.append(rutM)
                 data.append(dia)
                 data.append(mes)
@@ -427,7 +433,6 @@ while True:
         data.append("an")
         msg = crearMsg(data, servicio)
         enviarMsg(msg.encode())
-        
 
     if opcion == "0":
         print("Saliendo del sistema")

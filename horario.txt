@@ -1,1 +1,0 @@
-id-medico|dia|hora-inicio|hora-fin

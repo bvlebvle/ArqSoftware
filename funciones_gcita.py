@@ -122,6 +122,7 @@ def crearCita(parametros):
         agregarCobro(rutM)
         monto = obtenerMonto(id_medico)
         print("Monto: ", monto)
+
         nueva_cita = [id_cita, id_medico, id_paciente, dia_semana,
                       fecha_dia, mes, hora, estado, monto]
         with open(archivo_csv, 'a', newline='') as archivo:
@@ -228,10 +229,10 @@ def editarCita(parametros):
         return False
 
 
-parametros = "1111-1000-23-10-11:00"
+# parametros = "1111-1000-23-10-11:00"
 # eliminar = "1111-1000-23-10-11:00"
 # print(obtenerParametros(parametros))
-crearCita(parametros)
+# crearCita(parametros)
 # eliminarCita(eliminar)
 # parametros_editar = "1111-1000-23-10-11:00-23-10-10:30"
 # print(obtenerParametrosEditar(parametros_editar))
