@@ -44,7 +44,11 @@ try:
 
         if accion == 'rg':
             result = rankingDoctoresTodos()
-            resp = b'00019rmedsRankingGeneral'
+            respuesta_ranking = str(result)
+            longitud_respuesta = len(respuesta_ranking)
+            mensaje_respuesta = f"{longitud_respuesta:05d}rmeds" + \
+                respuesta_ranking
+            resp = mensaje_respuesta.encode()
         if accion == 're':
             result = rankingDoctoresEspecialidad()
             resp = b'00024rmedsRankingEspecialidad'

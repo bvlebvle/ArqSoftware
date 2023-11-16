@@ -1,46 +1,49 @@
 import csv
-
-def verificar_y_agregar_columna_box(archivo_medicos='./DB/medicos.csv'):
+def verificar_y_agregar_columna_box(archivo_medicos):
     filas_modificadas = []
-    columna_existente = False
-    
-    # Leer el contenido existente y verificar la presencia de la columna "box"
+    columna_box_existe = False
+
     with open(archivo_medicos, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
-        encabezados = next(csv_reader)  # Asumiendo que la primera fila son encabezados
-        if 'box' in encabezados:
-            columna_existente = True
-            return columna_existente  # No es necesario hacer más si la columna ya existe
+        encabezado = next(csv_reader)  # Obtener el encabezado
+
+        if 'box' in encabezado:
+            columna_box_existe = True
+            filas_modificadas.append(encabezado)
         else:
-            encabezados.append('box')
-            filas_modificadas.append(encabezados)  # Agregar los encabezados actualizados
+            encabezado.append('box')
+            filas_modificadas.append(encabezado)
 
         for fila in csv_reader:
-            fila.append('')  # Agregar un valor vacío para la nueva columna "box"
+            if not columna_box_existe:
+                fila.append('')  # Agrega un campo vacío para 'box'
             filas_modificadas.append(fila)
 
-    # Escribir los datos de nuevo, incluyendo la nueva columna si fue necesaria
-    with open(archivo_medicos, 'w', newline='') as archivo:
-        csv_writer = csv.writer(archivo, delimiter='|')
-        csv_writer.writerows(filas_modificadas)
-    
-    return not columna_existente  
+    if not columna_box_existe:
+        with open(archivo_medicos, 'w', newline='') as archivo:
+            csv_writer = csv.writer(archivo, delimiter='|')
+            csv_writer.writerows(filas_modificadas)
+        return True
 
-import csv
+    return False
 
 def asignar_sala(parametros, archivo_medicos='./DB/medicos.csv'):
     parametros = parametros.split('-')
     rut = parametros[0]
     sala_id = parametros[1]
-    
-    filas_modificadas = []
+
+    nueva_columna_agregada = verificar_y_agregar_columna_box(archivo_medicos)
     cambios_realizados = False
-    
+
+    filas_modificadas = []
     with open(archivo_medicos, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
             if fila[1] == rut:
-                fila.append(sala_id)  # Agregar el valor de la columna "box" al final de la fila
+                if len(fila) < 6 or nueva_columna_agregada:  # Asume que 'box' es la sexta columna
+                    fila.append(sala_id)  # Agrega 'box' si no existe
+                else:
+                    fila[5] = sala_id  # Actualiza 'box' si ya existe
                 cambios_realizados = True
             filas_modificadas.append(fila)
 
@@ -48,8 +51,9 @@ def asignar_sala(parametros, archivo_medicos='./DB/medicos.csv'):
         with open(archivo_medicos, 'w', newline='') as archivo:
             csv_writer = csv.writer(archivo, delimiter='|')
             csv_writer.writerows(filas_modificadas)
-    
+
     return cambios_realizados
+
 
 
 def obtener_ultimo_id(archivo_csv):

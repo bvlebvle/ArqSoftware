@@ -29,6 +29,7 @@ def enviarMsg(message):
         response_len_str = sock.recv(5).decode()
         response_len = int(response_len_str)
         response_service = sock.recv(5).decode()
+
         response_data = sock.recv(response_len - 5).decode()
 
         print(f"Received: {response_data} ")
@@ -36,6 +37,14 @@ def enviarMsg(message):
         # print ('closing socket')
         # sock.close ()
         return response_data
+
+
+def printDataRmeds(data):
+    resultados = [item.split('- ')[1].split('- Dr.')[0] for item in data]
+
+    # Convertir la lista en una cadena separada por comas
+    resultado_final = ', '.join(resultados)
+    print(resultado_final)
 
 
 print("Sistema de gestión de Centro Médico JRG")
