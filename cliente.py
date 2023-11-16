@@ -437,6 +437,52 @@ while True:
                 enviarMsg(msg.encode())
             if accion == "4":
                 break
+
+    if opcion == "11":
+        while True:
+            accion = menuBhora()
+            servicio = "bhora"
+            if accion == "1":
+                data = []
+                print("Bloqueo de horario")
+                rut = input("Ingrese rut de médico: ")
+                dia = input("Ingrese el dia: ")
+                hora = input("Ingrese la hora")
+                data.append("bh")
+                data.append(rut)
+                data.append(dia)
+                data.append(hora)
+                msg = crearMsg(data, servicio)
+                # Envía mensaje a través del bus
+                enviarMsg(msg.encode())
+            if accion == "2":
+                data = []
+                print("Desbloqueo de horario")
+                rut = input("Ingrese rut de médico: ")
+                dia = input("Ingrese el dia: ")
+                hora = input("Ingrese la hora")
+                data.append("dh")
+                data.append(rut)
+                data.append(dia)
+                data.append(hora)
+                msg = crearMsg(data, servicio)
+                # Envía el mensaje a través del bus
+                enviarMsg(msg.encode())
+            if accion == "3":
+                data = []
+                print("Agregar horario")
+                rut = input("Ingrese rut de médico: ")
+                dia = input("Ingrese el dia: ")
+                hora = input("Ingrese la hora")
+                data.append("ah")
+                data.append(rut)
+                data.append(dia)
+                data.append(hora)
+                msg = crearMsg(data, servicio)
+                # Envía mensaje a través del bus
+                enviarMsg(msg.encode())
+            if accion == "4":
+                break
     if opcion == "12":
         servicio = "aturp"
         data.append("an")
