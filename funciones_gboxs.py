@@ -26,14 +26,13 @@ def verificar_y_agregar_columna_box(archivo_medicos='./DB/medicos.csv'):
     
     return not columna_existente  
 
+import csv
+
 def asignar_sala(parametros, archivo_medicos='./DB/medicos.csv'):
-    # Primero, verificar y agregar la columna "box" si no existe
     parametros = parametros.split('-')
     rut = parametros[0]
     sala_id = parametros[1]
-    print("el rut es: ",rut," y la sala es: ",sala_id)
-    nueva_columna_agregada = verificar_y_agregar_columna_box(archivo_medicos)
-    print ("la nueva columna fue agregada: ",nueva_columna_agregada)
+    
     filas_modificadas = []
     cambios_realizados = False
     
@@ -41,10 +40,8 @@ def asignar_sala(parametros, archivo_medicos='./DB/medicos.csv'):
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
             if fila[1] == rut:
-                if nueva_columna_agregada or ('box' in fila):
-                    # Asumiendo que la última columna es 'box'
-                    fila[-1] = sala_id
-                    cambios_realizados = True
+                fila.append(sala_id)  # Agregar el valor de la columna "box" al final de la fila
+                cambios_realizados = True
             filas_modificadas.append(fila)
 
     if cambios_realizados:

@@ -7,18 +7,23 @@ Nombres de servicios
 		- Eliminar médico:  el-rut
 		- Editar medico : ed-rut-nuevoNombre-nuevoApellido-nuevaEspecialidad
 
+REVISADO OK
+-----------------------------------------------------
 2. Creación de horarios  - crhor
 	Definición de data:
 		- Crear horario: cr-rut-dia-horaInicio-horaFin
 		- Editar horario: ed-rut-dia-horaInicio-horaFin-nuevoDia-nuevaHoraInicio-nuevaHoraFin
 		- Eliminar horario: el-rut-dia-horaInicio-horaFin
 
+REVISADO OK
+-----------------------------------------------------
 3. Gestión de citas - gcita
 	Definición de data:
 		- Crear cita: cr-rutP-rutM-dia-mes-hora
 		- Editar cita: ed-rutP-rutM--dia-mes-hora-nuevoDia-nuevaHora
 		- Eliminar cita: el-rutP-rutM-dia-mes-hora
 
+REVISADO OK
 --------------------------------------------
 vale
 4. Ranking de médicos - rmeds
@@ -26,12 +31,18 @@ vale
 		- Obtener ranking según cantidad de citas de todos los médicos: rg
 		- obtener ranking según cantidad de citas de especialidades : re
 
+MOSTRAR EN CLIENTE
+--------------------------------------------
+
 5. Visualización de médicos - vmeds
 	Definición de data:
 		- Obtener visualización diaria de los medicos: vd-dia-mes
 		- Obtener visualización semanal de los medicos: vs-dia-mes
 		- Obtener visualización dia de un medico: dm-rutM-dia-mes-nombreM-apellidoM
 		- Obtener visualización semanal de un medico: sm-rutM-dia-mes-nombreM-apellidoM
+
+MOSTRAR EN CLIENTE
+---------------------------------------------
 
 6. Gestión de cobros - gcobr
 	Definición de data:

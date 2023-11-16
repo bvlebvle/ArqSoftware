@@ -2,6 +2,7 @@ import csv
 
 import csv
 
+
 def obtenerIDPaciente(rut, archivo_pacientes='./DB/pacientes.csv'):
     with open(archivo_pacientes, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
@@ -9,6 +10,7 @@ def obtenerIDPaciente(rut, archivo_pacientes='./DB/pacientes.csv'):
             if fila[1] == rut:
                 return fila[0]  # Retorna el ID del paciente
     return None  # Retorna None si no encuentra el RUT
+
 
 def verHistorialPaciente(rut, archivo_citas='./DB/citas.csv', archivo_pacientes='./DB/pacientes.csv'):
     id_paciente = obtenerIDPaciente(rut, archivo_pacientes)
@@ -20,7 +22,7 @@ def verHistorialPaciente(rut, archivo_citas='./DB/citas.csv', archivo_pacientes=
     with open(archivo_citas, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
-            if fila[1] == id_paciente:
+            if len(fila) >= 9 and fila[1] == id_paciente:
                 historial.append({
                     'id_paciente': fila[1],
                     'id_medico': fila[2],
@@ -54,9 +56,8 @@ def eliminarHistorialPaciente(rut, archivo_citas='./DB/citas.csv', archivo_pacie
     with open(archivo_citas, 'w', newline='') as archivo:
         csv_writer = csv.writer(archivo, delimiter='|')
         csv_writer.writerows(filas_actualizadas)
-    
-    return eliminado
 
+    return eliminado
 
 
 def editarHistorialPaciente(parametros, archivo_citas='./DB/citas.csv', archivo_pacientes='./DB/pacientes.csv'):
@@ -91,5 +92,5 @@ def editarHistorialPaciente(parametros, archivo_citas='./DB/citas.csv', archivo_
     with open(archivo_citas, 'w', newline='') as archivo:
         csv_writer = csv.writer(archivo, delimiter='|')
         csv_writer.writerows(filas_actualizadas)
-    
+
     return editado

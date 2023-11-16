@@ -18,9 +18,6 @@ def agregarCobro(parametros):
         monto = "12.590"
         print("Cobro por consulta $12.590 por ser especialista")
 
-    if obtenerMonto(id_medico) != 0:
-        print("El médico ya tiene un monto asociado")
-        return False
     archivo_csv = './DB/cobros.csv'
     with open(archivo_csv, 'a') as archivo:
         csv_writer = csv.writer(archivo, delimiter='|')
