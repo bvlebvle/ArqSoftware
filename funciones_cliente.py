@@ -29,6 +29,7 @@ def menuPrincipal():
     print("8. Gestión de boxs")
     print("9. Segimiento de médicos")
     print("10. Historial para médicos")
+    print("11. Bloqueo de horarios")
     print("12. Siguiente turno")
     print("0. Salir de sistema")
     opcion = input("Ingrese el número de la opción que desea: ")
@@ -145,6 +146,17 @@ def menuHmeds():
     print("1. Ver historial médico de un médico")
     print("2. Editar historial médico de un médico")
     print("3. Eliminar historial médico de un médico")
+    print("4. Volver al menú principal")
+    opcion = input("Ingrese el número de la opción que desea: ")
+    return opcion
+
+
+def menuBhora():
+    print("Bloqueo de horas")
+    print("Puede escoger entre las siguientes opciones:")
+    print("1. Bloquear horas")
+    print("2. Desbloquear horas")
+    print("3. Agregar horas")
     print("4. Volver al menú principal")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
