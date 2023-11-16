@@ -6,14 +6,18 @@ def leerDatosMedicos(archivo_medicos='./DB/medicos.csv'):
     with open(archivo_medicos, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
-            medicos[fila[1]] = {  # Usando el RUT como clave
-                'idMedico': fila[0],
-                'nombre': fila[2],
-                'apellido': fila[3],
-                'especialidad': fila[4],
-                'box': fila[5]
-            }
+            if len(fila) >= 6:  # Verifica que la fila tenga al menos 6 elementos
+                medicos[fila[1]] = {
+                    'idMedico': fila[0],
+                    'nombre': fila[2],
+                    'apellido': fila[3],
+                    'especialidad': fila[4],
+                    'box': fila[5]
+                }
+            else:
+                print(f"Advertencia: Fila incompleta encontrada en el archivo: {fila}")
     return medicos
+
 
 def calcularHorasTrabajadasPorRut(rut, archivo_horarios='./DB/horarios.csv', archivo_medicos='./DB/medicos.csv'):
     medicos = leerDatosMedicos(archivo_medicos)
