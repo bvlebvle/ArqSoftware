@@ -1,4 +1,7 @@
 
+import re
+
+
 def crearData(data):
     cant = len(data)
     payload = ""
@@ -34,6 +37,7 @@ def menuPrincipal():
     print("0. Salir de sistema")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
+
 
 def menuPaciente():
     print("1. Avisar llegada")
@@ -160,3 +164,23 @@ def menuBhora():
     print("4. Volver al menú principal")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
+
+
+def printDataRmeds1(data):
+    match = re.search(r'\[(.*?)\]', data)
+    if match:
+        content_inside_brackets = match.group(1)
+        cleaned_content = content_inside_brackets.replace("'", "")
+
+        # Dividir por comas y procesar cada elemento
+        elements = cleaned_content.split(', ')
+        for element in elements:
+            # Extraer la cantidad de citas y el nombre del doctor
+            match = re.search(r'Cantidad de citas:(\d+)- Dr\.(\w+)', element)
+            if match:
+                cantidad_citas = match.group(1)
+                nombre_doctor = match.group(2)
+                print("")
+                print(
+                    f"Dr: {nombre_doctor}, Cantidad de citas: {cantidad_citas}")
+    print("")

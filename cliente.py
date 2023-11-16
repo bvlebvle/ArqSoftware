@@ -39,14 +39,6 @@ def enviarMsg(message):
         return response_data
 
 
-def printDataRmeds(data):
-    resultados = [item.split('- ')[1].split('- Dr.')[0] for item in data]
-
-    # Convertir la lista en una cadena separada por comas
-    resultado_final = ', '.join(resultados)
-    print(resultado_final)
-
-
 print("Sistema de gestión de Centro Médico JRG")
 
 
@@ -234,11 +226,14 @@ while True:
             servicio = "rmeds"
             if accion == "1":
                 data = []
-                print("Ranking general de médicos")
+
                 data.append("rg")
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                response = enviarMsg(msg.encode())
+                print("")
+                print("Ranking general de médicos")
+                printDataRmeds1(response)
             if accion == "2":
                 data = []
                 print("Ranking de médicos por especialidad")
