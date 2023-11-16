@@ -4,6 +4,10 @@ def obtenerIDMedico(rut, archivo_medicos='./DB/medicos.csv'):
     with open(archivo_medicos, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
+            if not fila:  # Ignora las filas vacías
+                continue
+            if len(fila) < 2:
+                continue
             if fila[1] == rut:
                 return fila[0]  # Retorna el ID del médico
     return None  # Retorna None si no encuentra el RUT
@@ -18,6 +22,10 @@ def verHistorialMedico(rut, archivo_citas='./DB/citas.csv', archivo_medicos='./D
     with open(archivo_citas, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
+            if not fila:  # Ignora las filas vacías
+                continue
+            if len(fila) < 3:
+                continue
             if fila[2] == id_medico:
                 historial.append({
                     'id_cita': fila[0],
@@ -43,6 +51,10 @@ def eliminarHistorialMedico(rut, archivo_citas='./DB/citas.csv', archivo_medicos
     with open(archivo_citas, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
+            if not fila:  # Ignora las filas vacías
+                continue
+            if len(fila) < 3:
+                continue
             if fila[2] != id_medico:
                 filas_actualizadas.append(fila)
             else:
@@ -53,7 +65,6 @@ def eliminarHistorialMedico(rut, archivo_citas='./DB/citas.csv', archivo_medicos
         csv_writer.writerows(filas_actualizadas)
     
     return eliminado
-
 
 def editarHistorialMedico(parametros, archivo_citas='./DB/citas.csv', archivo_medicos='./DB/medicos.csv'):
     print("Estoy editando")
@@ -76,6 +87,10 @@ def editarHistorialMedico(parametros, archivo_citas='./DB/citas.csv', archivo_me
     with open(archivo_citas, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
+            if not fila:  # Ignora las filas vacías
+                continue
+            if len(fila) < 9:
+                continue
             if fila[2] == id_medico and fila[4] == fecha_antigua_dia and fila[5] == fecha_antigua_mes and fila[6] == fecha_antigua_ano:
                 print("Encontré la fila")
                 fila[3] = fecha_nueva_dia
@@ -89,4 +104,3 @@ def editarHistorialMedico(parametros, archivo_citas='./DB/citas.csv', archivo_me
         csv_writer.writerows(filas_actualizadas)
     
     return editado
-
