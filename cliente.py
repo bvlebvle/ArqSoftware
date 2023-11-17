@@ -32,7 +32,9 @@ def enviarMsg(message):
 
         response_data = sock.recv(response_len - 5).decode()
 
+        print("")
         print(f"Received: {response_data} ")
+        print("")
     finally:
         # print ('closing socket')
         # sock.close ()
@@ -222,6 +224,7 @@ while True:
                 break
     if opcion == "4":
         while True:
+            print("")
             accion = menuRmeds()
             servicio = "rmeds"
             if accion == "1":
@@ -233,14 +236,20 @@ while True:
                 response = enviarMsg(msg.encode())
                 print("")
                 print("Ranking general de médicos")
-                printDataRmeds1(response)
+                printDataRmeds2(response)
+                print("")
             if accion == "2":
                 data = []
-                print("Ranking de médicos por especialidad")
+
                 data.append("re")
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                response = enviarMsg(msg.encode())
+                print("")
+                print("Ranking de médicos por especialidad")
+                printDataRmeds2(response)
+                print("")
+
             if accion == "3":
                 break
     if opcion == "5":

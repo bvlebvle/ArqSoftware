@@ -160,27 +160,31 @@ def menuBhora():
     print("Puede escoger entre las siguientes opciones:")
     print("1. Bloquear horas")
     print("2. Desbloquear horas")
-    #print("3. Agregar horas")  # Agregar dps quiza
+    # print("3. Agregar horas")  # Agregar dps quiza
     print("4. Volver al menú principal")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
 
 
-def printDataRmeds1(data):
-    match = re.search(r'\[(.*?)\]', data)
-    if match:
-        content_inside_brackets = match.group(1)
-        cleaned_content = content_inside_brackets.replace("'", "")
-
-        # Dividir por comas y procesar cada elemento
-        elements = cleaned_content.split(', ')
-        for element in elements:
-            # Extraer la cantidad de citas y el nombre del doctor
-            match = re.search(r'Cantidad de citas:(\d+)- Dr\.(\w+)', element)
-            if match:
-                cantidad_citas = match.group(1)
-                nombre_doctor = match.group(2)
-                print("")
-                print(
-                    f"Dr: {nombre_doctor}, Cantidad de citas: {cantidad_citas}")
+def printDataRmeds2(cadena):
+   # OK['TRAUMATOLOGIA', '3-JUAN-PEREZ', '2-JUAN3-PEREZ', '1-JUAN2-PEREZ', 'GENERAL', '1-VALE-DIAZ', 'GINECOLOGIA', '1-MARTIN-SAAVEDRA']
+  # Busca el índice del primer corchete "[" y del último corchete "]"
     print("")
+    indice_inicio = cadena.find("[")
+    indice_fin = cadena.rfind("]")
+
+    # Extrae el contenido dentro de los corchetes
+    contenido_dentro_corchetes = cadena[indice_inicio + 1:indice_fin]
+    neto = contenido_dentro_corchetes.replace("'", "")
+    neto = neto.split(", ")
+
+    for i in range(len(neto)):
+        if neto[i][1] == "-":
+            cantidad, nombre, apellido = neto[i].split("-")
+            print(f"Dr: {nombre} {apellido}, Cantidad de citas: {cantidad}")
+        else:
+            print("")
+            print(f"Especialidad: {neto[i]}")
+
+
+# def printDataVmeds(data):

@@ -31,7 +31,7 @@ vale
 		- Obtener ranking según cantidad de citas de todos los médicos: rg
 		- obtener ranking según cantidad de citas de especialidades : re
 
-MOSTRAR EN CLIENTE
+REVISADO OK
 --------------------------------------------
 
 5. Visualización de médicos - vmeds
