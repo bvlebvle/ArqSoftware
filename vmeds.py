@@ -49,20 +49,32 @@ try:
         mes = fecha.month
         if accion == 'vd':
             result = visualizarAgendaDiaria(dia, mes, "")
-            if result:
-                resp = b'00017vmedsAgendaDiaria'
+            respuesta_agenda = str(result)
+            longitud_respuesta = len(respuesta_agenda)
+            mensaje_respuesta = f"{longitud_respuesta:05d}vmeds" + \
+                respuesta_agenda
+            resp = mensaje_respuesta.encode()
         if accion == 'vs':
             result = visualizarAgendaSemana(dia, mes, "")
-            if result:
-                resp = b'00018vmedsAgendaSemanal'
+            respuesta_agenda = str(result)
+            longitud_respuesta = len(respuesta_agenda)
+            mensaje_respuesta = f"{longitud_respuesta:05d}vmeds" + \
+                respuesta_agenda
+            resp = mensaje_respuesta.encode()
         if accion == 'dm':
-            result = visualizarAgendaDiaria(dia, mes, parametros)
-            if result:
-                resp = b'00025vmedsAgendaDiariaDeMedico'
+            result = diaMedico(dia, mes, parametros)
+            respuesta_agenda = str(result)
+            longitud_respuesta = len(respuesta_agenda)
+            mensaje_respuesta = f"{longitud_respuesta:05d}vmeds" + \
+                respuesta_agenda
+            resp = mensaje_respuesta.encode()
         if accion == 'sm':
-            result = visualizarAgendaSemana(dia, mes, parametros)
-            if result:
-                resp = b'00026vmedsAgendaSemanalDeMedico'
+            result = semanaMedico(dia, mes, parametros)
+            respuesta_agenda = str(result)
+            longitud_respuesta = len(respuesta_agenda)
+            mensaje_respuesta = f"{longitud_respuesta:05d}vmeds" + \
+                respuesta_agenda
+            resp = mensaje_respuesta.encode()
 
         print("")
         print("")
