@@ -17,7 +17,7 @@ def enviarMsg(message):
         response_len = int(response_len_str)
         response_service = sock.recv(5).decode()
         response_data = sock.recv(response_len - 5).decode()
-
+        print(f"Received: {response_service} ")
         print(f"Received: {response_data} ")
     finally:
         # print ('closing socket')
