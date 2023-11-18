@@ -51,7 +51,11 @@ try:
             resp = mensaje_respuesta.encode()
         if accion == 're':
             result = rankingDoctoresEspecialidad()
-            resp = b'00024rmedsRankingEspecialidad'
+            respuesta_ranking = str(result)
+            longitud_respuesta = len(respuesta_ranking)
+            mensaje_respuesta = f"{longitud_respuesta:05d}rmeds" + \
+                respuesta_ranking
+            resp = mensaje_respuesta.encode()
 
         print('sending {!r}'.format(resp))
         sock.sendall(resp)

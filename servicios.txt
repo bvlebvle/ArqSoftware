@@ -31,17 +31,17 @@ vale
 		- Obtener ranking según cantidad de citas de todos los médicos: rg
 		- obtener ranking según cantidad de citas de especialidades : re
 
-MOSTRAR EN CLIENTE
+REVISADO OK
 --------------------------------------------
 
 5. Visualización de médicos - vmeds
 	Definición de data:
 		- Obtener visualización diaria de los medicos: vd-dia-mes
 		- Obtener visualización semanal de los medicos: vs-dia-mes
-		- Obtener visualización dia de un medico: dm-rutM-dia-mes-nombreM-apellidoM
-		- Obtener visualización semanal de un medico: sm-rutM-dia-mes-nombreM-apellidoM
+		- Obtener visualización dia de un medico: dm-rutM-nombreM-apellidoM
+		- Obtener visualización semanal de un medico: sm-rutM-nombreM-apellidoM
 
-MOSTRAR EN CLIENTE
+REVISADO OK
 ---------------------------------------------
 
 6. Gestión de cobros - gcobr

@@ -37,37 +37,42 @@ def obtenerCitasDia(dia, mes):
 
 def visualizarAgendaDiaria(dia, mes, nombre):
     dia_semana = obtenerDiaSemana(dia, mes)
-    print("Agenda del día", dia_semana, dia, "/", mes)
+    # print("Agenda del día", dia_semana, dia, "/", mes)
     citas_del_dia = obtenerCitasDia(str(dia), str(mes))
+    result = []
 
     if nombre == "":
-        if len(citas_del_dia) == 0:
-            print("No hay citas agendadas")
-        else:
-            for cita in citas_del_dia:
-                id_medico = cita[0]
-                hora = cita[1]
-                nombre_medico = obtenerNombreMedico(id_medico)
-                print("Médico:", nombre_medico, "- Hora:", hora)
+        result.append(len(citas_del_dia))
+        for cita in citas_del_dia:
+            id_medico = cita[0]
+            hora = cita[1]
+            nombre_medico = obtenerNombreMedico(id_medico)
+            linea = nombre_medico + "-" + hora
+            result.append(linea)
     else:
-        if len(citas_del_dia) == 0:
-            print("No hay citas agendadas")
-        else:
-            for cita in citas_del_dia:
-                id_medico = cita[0]
-                hora = cita[1]
-                nombre_medico = obtenerNombreMedico(id_medico)
-                if nombre == nombre_medico:
-                    print("Médico:", nombre_medico, "- Hora:", hora)
-    return True
+        cont = 0
+        for cita in citas_del_dia:
+            id_medico = cita[0]
+            hora = cita[1]
+            nombre_medico = obtenerNombreMedico(id_medico)
+            if nombre == nombre_medico:
+                cont = cont + 1
+        result.append(cont)
+        for cita in citas_del_dia:
+            id_medico = cita[0]
+            hora = cita[1]
+            nombre_medico = obtenerNombreMedico(id_medico)
+            if nombre == nombre_medico:
+                linea = nombre_medico + "-" + hora
+                result.append(linea)
+    return result
 
 
 def visualizarAgendaSemana(dia, mes, nombre):
-    print("Agenda de la semana")
-    print("-------------------------")
+    result = []
     for i in range(7):
-        visualizarAgendaDiaria(dia, mes, nombre)
-        print("")
+        un_dia = visualizarAgendaDiaria(dia, mes, nombre)
+        result.append(un_dia)
         dia = int(dia) + 1
         if mes == 2 and dia > 28:
             dia = 1
@@ -80,7 +85,7 @@ def visualizarAgendaSemana(dia, mes, nombre):
             if dia > 31:
                 dia = 1
                 mes = int(mes) + 1
-    return True
+    return result
 
 
 def diaMedico(dia, mes, data):
@@ -88,9 +93,8 @@ def diaMedico(dia, mes, data):
     nombre = data[0:data.find('-')].upper()
     apellido = data[data.find('-')+1:].upper()
     nombre_medico = nombre + " " + apellido
-
-    visualizarAgendaDiaria(dia, mes, nombre_medico)
-    return True
+    result = visualizarAgendaDiaria(dia, mes, nombre_medico)
+    return result
 
 
 def semanaMedico(dia, mes, data):
@@ -98,16 +102,20 @@ def semanaMedico(dia, mes, data):
     nombre = data[0:data.find('-')].upper()
     apellido = data[data.find('-')+1:].upper()
     nombre_medico = nombre + " " + apellido
-    visualizarAgendaSemana(dia, mes, nombre_medico)
-    return True
+    result = visualizarAgendaSemana(dia, mes, nombre_medico)
+    return result
 
 
-# fecha = datetime.datetime.now()
-# dia = fecha.day
-# mes = fecha.month
+fecha = datetime.datetime.now()
+dia = fecha.day
+mes = fecha.month
 # visualizarAgendaDiaria(dia, mes, "")
-# diaMedico("roberto-sanchez")
+print(diaMedico(dia, mes, "juan-perez"))
+# print(semanaMedico(dia, mes, "juan-perez"))
 
 # print("")
 # visualizarAgendaSemana(dia, mes, "")
 # semanaMedico("juan-perez")
+
+# print(visualizarAgendaDiaria(dia, mes, ""))
+# print(visualizarAgendaSemana(dia, mes, ""))

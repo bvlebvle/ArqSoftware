@@ -1,4 +1,5 @@
 
+import datetime
 import re
 import json
 
@@ -160,30 +161,102 @@ def menuBhora():
     print("Puede escoger entre las siguientes opciones:")
     print("1. Bloquear horas")
     print("2. Desbloquear horas")
-    #print("3. Agregar horas")  # Agregar dps quiza
-    print("4. Volver al menú principal")
+    # print("3. Agregar horas")  # Agregar dps quiza
+    print("3. Volver al menú principal")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
 
 
-def printDataRmeds1(data):
-    match = re.search(r'\[(.*?)\]', data)
-    if match:
-        content_inside_brackets = match.group(1)
-        cleaned_content = content_inside_brackets.replace("'", "")
-
-        # Dividir por comas y procesar cada elemento
-        elements = cleaned_content.split(', ')
-        for element in elements:
-            # Extraer la cantidad de citas y el nombre del doctor
-            match = re.search(r'Cantidad de citas:(\d+)- Dr\.(\w+)', element)
-            if match:
-                cantidad_citas = match.group(1)
-                nombre_doctor = match.group(2)
-                print("")
-                print(
-                    f"Dr: {nombre_doctor}, Cantidad de citas: {cantidad_citas}")
+def printDataRmeds2(cadena):
+   # OK['TRAUMATOLOGIA', '3-JUAN-PEREZ', '2-JUAN3-PEREZ', '1-JUAN2-PEREZ', 'GENERAL', '1-VALE-DIAZ', 'GINECOLOGIA', '1-MARTIN-SAAVEDRA']
+  # Busca el índice del primer corchete "[" y del último corchete "]"
     print("")
+    indice_inicio = cadena.find("[")
+    indice_fin = cadena.rfind("]")
+
+    # Extrae el contenido dentro de los corchetes
+    contenido_dentro_corchetes = cadena[indice_inicio + 1:indice_fin]
+    neto = contenido_dentro_corchetes.replace("'", "")
+    neto = neto.split(", ")
+
+    for i in range(len(neto)):
+        if neto[i][1] == "-":
+            cantidad, nombre, apellido = neto[i].split("-")
+            print(f"Dr: {nombre} {apellido}, Cantidad de citas: {cantidad}")
+        else:
+            print("")
+            print(f"Especialidad: {neto[i]}")
+
+
+def printDataVmeds(cadena):
+    print("")
+    indice_inicio = cadena.find("[")
+    indice_fin = cadena.rfind("]")
+
+    contenido_dentro_corchetes = cadena[indice_inicio + 1:indice_fin]
+    neto = contenido_dentro_corchetes.replace("'", "")
+    neto = neto.split(", ")
+    inicial = neto[0]
+    # fecha
+    fecha = datetime.datetime.now()
+    dia = fecha.day
+    mes = fecha.month
+    print("Día", dia, "/", mes)
+    print("")
+    if inicial == "0":
+        print("No hay citas agendadas")
+    else:
+        for i in range(1, len(neto)):
+            separado = neto[i].split("-")
+            print(f"Dr. {separado[0]}, hora: {separado[1]}")
+
+
+def printDataVmeds2(cadena):
+    indice_inicio = cadena.find("[")
+    indice_fin = cadena.rfind("]")
+    contenido_dentro_corchetes = cadena[indice_inicio + 1:indice_fin]
+    neto = contenido_dentro_corchetes.split("], [")
+    fecha = datetime.datetime.now()
+    dia = fecha.day
+    mes = fecha.month
+
+    for i in range(len(neto)):
+        print("")
+        print("Día", dia, "/", mes)
+        if neto[i][0] == "[":
+            neto[i] = neto[i][1:]
+        if neto[i][-1] == "]":
+            neto[i] = neto[i][:-1]
+
+        if neto[i] == "0":
+            print("No hay citas agendadas")
+        else:
+            separado = neto[i].split(",")
+            citas = int(separado[0])
+            for j in range(citas):
+                separado[j+1] = separado[j+1].replace("'", "")
+                nh = separado[j+1].split("-")
+                print(f"Dr. {nh[0]}, hora: {nh[1]}")
+            # print(f"Dr. {separado[1]}, hora: {separado[1]}")
+        dia = int(dia) + 1
+        if mes == 2 and dia > 28:
+            dia = 1
+            mes = int(mes) + 1
+        elif mes == 4 or mes == 6 or mes == 9 or mes == 11:
+            if dia > 30:
+                dia = 1
+                mes = int(mes) + 1
+        else:
+            if dia > 31:
+                dia = 1
+                mes = int(mes) + 1
+
+
+# [2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30']
+# printDataVmeds("[2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30']")
+# [[2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30'], [0], [0], [0], [0], [0], [0]]
+data = "OK[[2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30'], [0], [0], [0], [0], [0], [0]] "
+printDataVmeds2(data)
     
 def printlindahpcss(data):
     print("Historial de paciente recibido del bus:")

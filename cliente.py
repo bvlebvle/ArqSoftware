@@ -32,6 +32,8 @@ def enviarMsg(message):
         response_service = sock.recv(5).decode()
 
         response_data = sock.recv(response_len - 5).decode()
+
+        print(f"Received: {response_data} ")
     finally:
         return response_data
 
@@ -219,6 +221,7 @@ while True:
                 break
     if opcion == "4":
         while True:
+            print("")
             accion = menuRmeds()
             servicio = "rmeds"
             if accion == "1":
@@ -230,14 +233,20 @@ while True:
                 response = enviarMsg(msg.encode())
                 print("")
                 print("Ranking general de médicos")
-                printDataRmeds1(response)
+                printDataRmeds2(response)
+                print("")
             if accion == "2":
                 data = []
-                print("Ranking de médicos por especialidad")
+
                 data.append("re")
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                response = enviarMsg(msg.encode())
+                print("")
+                print("Ranking de médicos por especialidad")
+                printDataRmeds2(response)
+                print("")
+
             if accion == "3":
                 break
     if opcion == "5":
@@ -246,18 +255,27 @@ while True:
             servicio = "vmeds"
             if accion == "1":
                 data = []
-                print("Agenda diaria de todos los médicos")
+
                 data.append("vd")
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result = enviarMsg(msg.encode())
+                print("")
+                print("Agenda diaria de todos los médicos")
+                printDataVmeds(result)
+                print("")
+
             if accion == "2":
                 data = []
                 print("Agenda semanal de todos los médicos")
                 data.append("vs")
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result = enviarMsg(msg.encode())
+                print("")
+                print("Agenda semanal de todos los médicos")
+                printDataVmeds2(result)
+                print("")
             if accion == "3":
                 data = []
                 print("Agenda diaria de un médico")
@@ -268,6 +286,11 @@ while True:
                 data.append(apellido)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
+                result = enviarMsg(msg.encode())
+                print("")
+                print("Agenda diaria de", nombre.upper(), apellido.upper())
+                printDataVmeds(result)
+                print("")
                 enviarMsg(msg.encode())
             if accion == "4":
                 data = []
@@ -279,6 +302,11 @@ while True:
                 data.append(apellido)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
+                result = enviarMsg(msg.encode())
+                print("")
+                print("Agenda semanal de", nombre.upper(), apellido.upper())
+                printDataVmeds2(result)
+                print("")
                 enviarMsg(msg.encode())
             if accion == "5":
                 break
@@ -467,19 +495,6 @@ while True:
                 # Envía el mensaje a través del bus
                 enviarMsg(msg.encode())
             if accion == "3":
-                data = []
-                print("Agregar horario")
-                rut = input("Ingrese rut de médico: ")
-                dia = input("Ingrese el dia: ")
-                hora = input("Ingrese la hora: ")
-                data.append("ah")
-                data.append(rut)
-                data.append(dia)
-                data.append(hora)
-                msg = crearMsg(data, servicio)
-                # Envía mensaje a través del bus
-                enviarMsg(msg.encode())
-            if accion == "4":
                 break
     if opcion == "12":
         servicio = "aturp"

@@ -68,8 +68,7 @@ def rankingDoctoresTodos():
         if cont == 4:
             break
         nombre, apellido = obtenerNombreMedico(id_medico)
-        linea = str(cont) + "- Cantidad de citas:" + \
-            str(veces) + "- Dr." + nombre + apellido
+        linea = linea = str(veces) + "-" + nombre + "-" + apellido
         result.append(linea)
         cont += 1
     return result
@@ -87,18 +86,20 @@ def rankingDoctoresEspecialidad():
             especialidades.append(especialidad)
 
     for especialidad in especialidades:
-        print("Especialidad:", especialidad)
+        result.append(especialidad)
         cont = 1
         for medico in triada:
-            if medico[2] == especialidad:
+            if medico[2] == especialidad and cont < 4:
+
                 id_medico = medico[0]
                 nombre, apellido = obtenerNombreMedico(id_medico)
-                linea = str(cont) + "- Cantidad de citas:" + \
-                    str(medico[1]) + "- Dr." + nombre + apellido
+                linea = str(medico[1]) + "-" + nombre + "-" + apellido
                 result.append(linea)
+                cont += 1
+    return result
 
 
 # rankingDoctoresTodos()
 # print(triadaMedico())
 # print(obtenerEspecialidadMedico("1"))
-# rankingDoctoresEspecialidad()
+# print(rankingDoctoresEspecialidad())
