@@ -428,10 +428,11 @@ while True:
                 rut = input("Ingrese rut de médico: ")
                 data.append("vr")
                 data.append(rut)
-                print(data)
                 msg = crearMsg(data, servicio)
                 # Envía mensaje a través del bus
-                enviarMsg(msg.encode())
+                #enviarMsg(msg.encode())
+                response = enviarMsg(msg.encode())
+                printDataHmeds(response)
             if accion == "2":
                 print("Editar historial de médico")
                 rut = input("Ingrese RUT del médico: ")
