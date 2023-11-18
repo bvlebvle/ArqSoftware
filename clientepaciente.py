@@ -1,6 +1,6 @@
 import socket
 from funciones_cliente import *
-
+import json
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = ('localhost', 5001)
 print('Conectando a {} puerto {}'.format(*server_address))
@@ -17,8 +17,6 @@ def enviarMsg(message):
         response_len = int(response_len_str)
         response_service = sock.recv(5).decode()
         response_data = sock.recv(response_len - 5).decode()
-        print(f"Received: {response_service} ")
-        print(f"Received: {response_data} ")
     finally:
         # print ('closing socket')
         # sock.close ()

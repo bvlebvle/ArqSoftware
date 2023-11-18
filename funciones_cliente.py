@@ -1,6 +1,6 @@
 
 import re
-
+import json
 
 def crearData(data):
     cant = len(data)
@@ -184,3 +184,24 @@ def printDataRmeds1(data):
                 print(
                     f"Dr: {nombre_doctor}, Cantidad de citas: {cantidad_citas}")
     print("")
+    
+def printlindahpcss(data):
+    print("Historial de paciente recibido del bus:")
+    try:
+        # Eliminar el "OK" del principio
+        if data.startswith('OK'):
+            data = data[2:]
+        # Reemplazar comillas simples por comillas dobles para obtener un JSON válido
+        data = data.replace("'", '"')
+        # Cargar la cadena como JSON
+        citas = json.loads(data)
+        for cita in citas:
+            print(f"Día de la semana: {cita['dia_semana']}, Día: {cita['dia']}, Mes: {cita['mes']}, "
+                  f"Hora: {cita['hora']}, Estado: {cita['estado']}, Monto: {cita['monto']}")
+        print("")
+
+    except json.JSONDecodeError as e:
+        print("Error al decodificar la respuesta JSON:", e)
+    except Exception as e:
+        print("Ocurrió un error:", e)
+    

@@ -2,6 +2,7 @@ import subprocess
 import socket
 from funciones_gmeds import *
 from funciones_cliente import *
+import json
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -31,11 +32,7 @@ def enviarMsg(message):
         response_service = sock.recv(5).decode()
 
         response_data = sock.recv(response_len - 5).decode()
-
-        print(f"Received: {response_data} ")
     finally:
-        # print ('closing socket')
-        # sock.close ()
         return response_data
 
 
@@ -310,7 +307,8 @@ while True:
                 print(data)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                response = enviarMsg(msg.encode())
+                printlindahpcss(response)
             if accion == "2":
                 data = []
                 print("Editar historial de paciente")
@@ -357,7 +355,9 @@ while True:
                 data.append(piso)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                responde = enviarMsg(msg.encode())
+                if responde == "OK":
+                    print("box creado")
             if accion == "2":
                 data = []
                 print("asignar box")
@@ -368,7 +368,9 @@ while True:
                 data.append(box)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                responde = enviarMsg(msg.encode())
+                if responde.startswith('OK'):
+                    print("Box asignado correctamente")
             if accion == "3":
                 break
     if opcion == "9":
@@ -384,7 +386,8 @@ while True:
                 data.append(rut)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                responde = enviarMsg(msg.encode())
+                print("las horas trabajadas por el medico son: " + responde[2:])
             if accion == "2":
                 break
     if opcion == "10":
