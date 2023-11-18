@@ -6,7 +6,7 @@ def obtenerIDMedico(rut, archivo_medicos='./DB/medicos.csv'):
         for fila in csv_reader:
             if fila[1] == rut:
                 return fila[0]  # Retorna el ID del médico
-    return None  # Retorna None si no encuentra el RUT
+    return f" - Medico no encontrado"  # Retorna None si no encuentra el RUT
 
 def bloquearHoras(parametros, archivo_horarios='./DB/horarios.csv'):
     divido = parametros.split("-")
@@ -26,7 +26,7 @@ def bloquearHoras(parametros, archivo_horarios='./DB/horarios.csv'):
     for horario in horarios:
         if horario[1] == id_medico and horario[2] == dia and horario[3] == horaInicio:
             if horario[5] == 'False':
-                return "Este bloque ya está bloqueado"
+                return " - Este bloque ya está bloqueado"
             else:
                 horario[5] = 'False'
                 with open(archivo_horarios, 'w', newline='') as archivo_actualizado:
