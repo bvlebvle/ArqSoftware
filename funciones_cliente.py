@@ -162,7 +162,7 @@ def menuBhora():
     print("1. Bloquear horas")
     print("2. Desbloquear horas")
     # print("3. Agregar horas")  # Agregar dps quiza
-    print("4. Volver al menú principal")
+    print("3. Volver al menú principal")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
 

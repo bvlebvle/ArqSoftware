@@ -74,7 +74,7 @@ def avanzarNumero(archivo_turnos='./DB/turnos.csv'):
         writer = csv.writer(file, delimiter='|')
         writer.writerows(rows)
 
-    return f" - turno: {menor_turno}" if menor_turno is not None else "No hay turnos disponibles"
+    return f" - turno: {menor_turno}" if menor_turno is not None else " No hay turnos disponibles"
 
 
 menor_turno_encontrado = avanzarNumero()

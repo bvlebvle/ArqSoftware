@@ -492,19 +492,6 @@ while True:
                 # Envía el mensaje a través del bus
                 enviarMsg(msg.encode())
             if accion == "3":
-                data = []
-                print("Agregar horario")
-                rut = input("Ingrese rut de médico: ")
-                dia = input("Ingrese el dia: ")
-                hora = input("Ingrese la hora: ")
-                data.append("ah")
-                data.append(rut)
-                data.append(dia)
-                data.append(hora)
-                msg = crearMsg(data, servicio)
-                # Envía mensaje a través del bus
-                enviarMsg(msg.encode())
-            if accion == "4":
                 break
     if opcion == "12":
         servicio = "aturp"
