@@ -16,7 +16,7 @@ def verHistorialMedico(rut, archivo_citas='./DB/citas.csv', archivo_medicos='./D
     id_medico = obtenerIDMedico(rut, archivo_medicos)
     if id_medico is None:
         print("Médico no encontrado.")
-        return []
+        return f" - Médico no encontrado."
 
     historial = []
     with open(archivo_citas, 'r') as archivo:
@@ -44,7 +44,7 @@ def eliminarHistorialMedico(rut, archivo_citas='./DB/citas.csv', archivo_medicos
     id_medico = obtenerIDMedico(rut, archivo_medicos)
     if id_medico is None:
         print("Médico no encontrado.")
-        return False
+        return f" - Historial eliminado correctamente."
 
     filas_actualizadas = []
     eliminado = False
