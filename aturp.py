@@ -43,11 +43,11 @@ try:
 
         if accion == 'gn':
             result = generarNumero(parametros)
-            resp = f'00009aturp{result}'.encode()
+            resp = f'00014aturp{result}'.encode()
 
         if accion == 'an':
             result = avanzarNumero()
-            resp = f'00009aturp{result}'.encode()
+            resp = f'00014aturp{result}'.encode()
 
         print('Enviando {!r}'.format(resp))
         sock.sendall(resp)

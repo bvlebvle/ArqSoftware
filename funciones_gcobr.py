@@ -23,7 +23,7 @@ def agregarCobro(parametros):
         csv_writer = csv.writer(archivo, delimiter='|')
         csv_writer.writerow([id_medico, monto])
 
-    return True
+    return True, monto
 
 
 def obtenerMonto(id_medico):
@@ -35,3 +35,9 @@ def obtenerMonto(id_medico):
                 return fila[1]
 
     return 0
+
+
+bool, monto = agregarCobro("199947214")
+
+print(bool)
+print(monto)

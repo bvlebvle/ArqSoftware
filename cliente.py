@@ -322,6 +322,14 @@ while True:
                 data.append(rutM)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
+                result = enviarMsg(msg.encode())
+                result = result[2:]
+                print("")
+                print("Valor a pagar por consulta: $", result)
+                print("")
+            if accion == "2":
+                break
+
     if opcion == "7":
         while True:
             accion = menuHpacs()
@@ -438,10 +446,11 @@ while True:
                 rut = input("Ingrese rut de médico: ")
                 data.append("vr")
                 data.append(rut)
-                print(data)
                 msg = crearMsg(data, servicio)
                 # Envía mensaje a través del bus
-                enviarMsg(msg.encode())
+                #enviarMsg(msg.encode())
+                response = enviarMsg(msg.encode())
+                printDataHmeds(response)
             if accion == "2":
                 print("Editar historial de médico")
                 rut = input("Ingrese RUT del médico: ")

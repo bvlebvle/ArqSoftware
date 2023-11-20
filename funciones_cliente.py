@@ -166,6 +166,23 @@ def menuBhora():
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
 
+def printDataHmeds(cadena):
+    print("")
+    indice_inicio = cadena.find("[")
+    indice_fin = cadena.rfind("]")
+
+    # Extraer el contenido dentro de los corchetes
+    contenido_dentro_corchetes = cadena[indice_inicio + 1:indice_fin]
+    neto = contenido_dentro_corchetes.replace("'", "")
+    neto = neto.split("}, {")  # Separar cada conjunto de datos
+
+    for elemento in neto:
+        datos = elemento.split(", ")
+        print("Datos del historial médico:")
+        for dato in datos:
+            clave, valor = dato.split(": ")
+            print(f" - {clave}: {valor}")
+        print("------")
 
 def printDataRmeds2(cadena):
    # OK['TRAUMATOLOGIA', '3-JUAN-PEREZ', '2-JUAN3-PEREZ', '1-JUAN2-PEREZ', 'GENERAL', '1-VALE-DIAZ', 'GINECOLOGIA', '1-MARTIN-SAAVEDRA']

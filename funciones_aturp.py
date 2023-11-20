@@ -5,21 +5,13 @@ def obtenerIDPaciente(rut, archivo_pacientes='./DB/pacientes.csv'):
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
             if fila[1] == rut:
-                return fila[0]  # Retorna el ID del paciente
-    return None  # Retorna None si no encuentra el RUT
-
-def obtenerIDPaciente(rut, archivo_pacientes='./DB/pacientes.csv'):
-    with open(archivo_pacientes, 'r') as archivo:
-        csv_reader = csv.reader(archivo, delimiter='|')
-        for fila in csv_reader:
-            if fila[1] == rut:
                 return fila[0]  # Retorna la ID del paciente
-    return None  # Retorna None si no encuentra el RUT
+    return f" - Paciente no registrado"  # Retorna None si no encuentra el RUT
 
 def generarNumero(rut):
     id_paciente = obtenerIDPaciente(rut)
     if id_paciente is None:
-        return " - Paciente no registrado"
+        return f" - Paciente no registrado"
 
     with open('./DB/turnos.csv', 'r') as archivo_turnos:
         csv_reader = csv.DictReader(archivo_turnos, delimiter='|')

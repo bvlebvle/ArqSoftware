@@ -1,1 +1,8 @@
 id| idMedico|dia|horaInicio|horaFin|disponible
+1|1|LUNES|08:00|08:30|True
+1|1|DOMINGO|08:00|08:30|True
+2|1|LUNES|08:30|09:00|True
+3|2|LUNES|09:00|09:30|True
+4|2|LUNES|09:30|10:00|True
+7|1|JUEVES|13:00|13:30|True
+8|1|JUEVES|13:30|14:00|True

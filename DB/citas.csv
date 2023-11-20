@@ -1,4 +1,5 @@
 id|id_paciente|id_medico|dia_semana|dia|mes|hora|estado|monto|
-1|1|1|Lunes|15|10|11:00|Pendiente|0|
-2|1|1|Lunes|13|9|12:00|Pendiente|0|
-3|1|1|Lunes|11|15|12:00|Pendiente|0|
+2|1|1|MARTES|14|11|13:30|AGENDADA|12.590
+3|1|1|MARTES|14|11|13:30|AGENDADA|12.590
+
+
