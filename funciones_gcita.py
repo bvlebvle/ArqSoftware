@@ -72,6 +72,12 @@ def obtenerParametrosEliminar(data):
 
 def obtenerIdCita(id_paciente, id_medico, dia, mes, hora):
     archivo_csv = './DB/citas.csv'
+    print ("obtener cita")
+    print ("id paciente: ", id_paciente)
+    print ("id medico: ", id_medico)
+    print ("dia: ", dia)
+    print ("mes: ", mes)
+    print ("hora: ", hora)
     with open(archivo_csv, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
@@ -89,7 +95,8 @@ def crearCita(parametros):
 
     # paciente
     id_paciente = obtenerIdPaciente(rutP)
-
+    print ("rut_p: ", rutP)
+    print ("rut_m: ", rutM)
     if id_paciente == 0:
         print("Paciente no existe")
         return False
@@ -185,7 +192,6 @@ def editarCita(parametros):
     rutP, rutM, dia_antiguo, mes_antiguo, hora_antiguo, dia_nuevo, mes_nuevo, hora_nuevo = obtenerParametrosEditar(
         parametros)
     id_medico = 0
-
     # data antigua
     data_antigua = rutP + "-" + rutM + "-" + \
         dia_antiguo + "-" + mes_antiguo + "-" + hora_antiguo
@@ -200,7 +206,6 @@ def editarCita(parametros):
     dia_semana_nuevo = obtenerDiaSemana(dia_nuevo, mes_nuevo)
 
     id_horario = buscarIdHorario(id_medico, dia_semana_nuevo, hora_nuevo)
-
     if id_horario == 0:
         print("Horario no disponible para cita nueva")
         return False
@@ -208,7 +213,17 @@ def editarCita(parametros):
     id_paciente = obtenerIdPaciente(rutP)
     id_cita = obtenerIdCita(id_paciente, id_medico,
                             dia_antiguo, mes_antiguo, hora_antiguo)
-
+    print ("id cita: ", id_cita)
+    print ("id horario: ", id_horario)
+    print ("id medico: ", id_medico)
+    print ("id paciente: ", id_paciente)
+    print ("dia semana nuevo: ", dia_semana_nuevo)
+    print ("hora nueva: ", hora_nuevo)
+    print ("dia nuevo: ", dia_nuevo)
+    print ("mes nuevo: ", mes_nuevo)
+    print ("hora antiguo: ", hora_antiguo)
+    print ("dia antiguo: ", dia_antiguo)
+    print ("mes antiguo: ", mes_antiguo)
     if id_cita == 0:
         print("Cita no existe")
         return False
@@ -241,3 +256,5 @@ def editarCita(parametros):
 
 
 # id , medico_id, paciente_id, dia, mes, hora, estado, monto
+parametros = "123456-123456-14-11-15:30-14-11-16:00"
+editarCita(parametros)

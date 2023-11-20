@@ -433,7 +433,7 @@ while True:
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
                 responde = enviarMsg(msg.encode())
-                print("las horas trabajadas por el medico son: " + responde[2:])
+                print("las horas trabajadas por el medico son: " + responde[2:]+ " horas")
             if accion == "2":
                 break
     if opcion == "10":
