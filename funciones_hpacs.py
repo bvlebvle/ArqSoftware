@@ -35,7 +35,12 @@ def verHistorialPaciente(rut, archivo_citas='./DB/citas.csv', archivo_pacientes=
 
 
 
-def eliminarHistorialPaciente(rut, archivo_citas='./DB/citas.csv', archivo_pacientes='./DB/pacientes.csv'):
+def eliminarHistorialPaciente(parametros, archivo_citas='./DB/citas.csv', archivo_pacientes='./DB/pacientes.csv'):
+    parametros = parametros.split("-")
+    rut = parametros[0]
+    dia = parametros[1]
+    mes = parametros[2]
+    hora = parametros[3]
     id_paciente = obtenerIDPaciente(rut, archivo_pacientes)
     if id_paciente is None:
         print("Paciente no encontrado.")
@@ -46,29 +51,30 @@ def eliminarHistorialPaciente(rut, archivo_citas='./DB/citas.csv', archivo_pacie
     with open(archivo_citas, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
-            if fila[1] != id_paciente:
-                filas_actualizadas.append(fila)
-            else:
+            # Comprueba si la fila corresponde a la cita que se quiere eliminar
+            if fila[1] == id_paciente and fila[4] == dia and fila[5] == mes and fila[6] == hora:
                 eliminado = True
+                continue  # No añadir esta fila a filas_actualizadas para eliminarla
+            filas_actualizadas.append(fila)
 
-    with open(archivo_citas, 'w', newline='') as archivo:
-        csv_writer = csv.writer(archivo, delimiter='|')
-        csv_writer.writerows(filas_actualizadas)
+    if eliminado:
+        with open(archivo_citas, 'w', newline='') as archivo:
+            csv_writer = csv.writer(archivo, delimiter='|')
+            csv_writer.writerows(filas_actualizadas)
 
     return eliminado
 
 
-def editarHistorialPaciente(parametros, archivo_citas='./DB/citas.csv', archivo_pacientes='./DB/pacientes.csv'):
-    print("Estoy editando")
-    divido = parametros.split("-")
-    rut = divido[0]
-    fecha_antigua_dia = divido[1]
-    fecha_antigua_mes = divido[2]
-    fecha_antigua_ano = divido[3]
-    fecha_nueva_dia = divido[4]
-    fecha_nueva_mes = divido[5]
-    fecha_nueva_ano = divido[6]
 
+def editarHistorialPaciente(parametros, archivo_citas='./DB/citas.csv', archivo_pacientes='./DB/pacientes.csv'):
+    parametros = parametros.split("-")
+    rut = parametros[0]
+    dia_antiguo = parametros[1]
+    mes_antiguo =   parametros[2]
+    hora_antigua =  parametros[3]
+    dia_nuevo =    parametros[4]
+    mes_nuevo =   parametros[5]
+    hora_nueva = parametros[6]
     id_paciente = obtenerIDPaciente(rut, archivo_pacientes)
     if id_paciente is None:
         print("Paciente no encontrado.")
@@ -79,16 +85,22 @@ def editarHistorialPaciente(parametros, archivo_citas='./DB/citas.csv', archivo_
     with open(archivo_citas, 'r') as archivo:
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
-            if fila[1] == id_paciente and fila[4] == fecha_antigua_dia and fila[5] == fecha_antigua_mes and fila[6] == fecha_antigua_ano:
-                print("Encontré la fila")
-                fila[4] = fecha_nueva_dia
-                fila[5] = fecha_nueva_mes
-                fila[6] = fecha_nueva_ano
+            # Verifica que la fila tenga todos los elementos esperados
+            if len(fila) < 9:  # Asegúrate de que este número sea correcto según tu estructura de datos
+                continue  # Si no los tiene, ignora esta fila y continúa con la siguiente
+            if fila[1] == id_paciente and fila[4] == dia_antiguo and fila[5] == mes_antiguo and fila[6] == hora_antigua:
+                print("Encontré la fila a editar")
+                fila[4] = dia_nuevo
+                fila[5] = mes_nuevo
+                fila[6] = hora_nueva
                 editado = True
             filas_actualizadas.append(fila)
 
-    with open(archivo_citas, 'w', newline='') as archivo:
-        csv_writer = csv.writer(archivo, delimiter='|')
-        csv_writer.writerows(filas_actualizadas)
+    if editado:
+        with open(archivo_citas, 'w', newline='') as archivo:
+            csv_writer = csv.writer(archivo, delimiter='|')
+            csv_writer.writerows(filas_actualizadas)
 
     return editado
+
+

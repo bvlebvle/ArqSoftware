@@ -33,7 +33,7 @@ def enviarMsg(message):
 
         response_data = sock.recv(response_len - 5).decode()
 
-        print(f"Received: {response_data} ")
+        #print(f"Received: {response_data} ")
     finally:
         return response_data
 
@@ -357,16 +357,26 @@ while True:
                 data.append(fecha_nueva_hora)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                responde = enviarMsg(msg.encode())
+                if responde.startswith('OK'):
+                    print("Modificado correctamente")
             if accion == "3":
                 data = []
                 print("Eliminar historial de paciente")
                 rut = input("Ingrese rut de paciente: ")
+                dia = input("Ingrese dia de la cita: ")
+                mes = input("Ingrese mes de la cita: ")
+                hora = input("Ingrese hora de la cita: ")
                 data.append("el")
                 data.append(rut)
+                data.append(dia)
+                data.append(mes)
+                data.append(hora)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                responde = enviarMsg(msg.encode())
+                if responde.startswith('OK'):
+                    print("Eliminado correctamente")
             if accion == "4":
                 break
     if opcion == "8":
@@ -384,7 +394,7 @@ while True:
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
                 responde = enviarMsg(msg.encode())
-                if responde == "OK":
+                if responde.startswith('OK'):
                     print("box creado")
             if accion == "2":
                 data = []

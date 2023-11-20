@@ -259,7 +259,7 @@ data = "OK[[2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30'], [0], [0], [0], [0], 
 printDataVmeds2(data)
     
 def printlindahpcss(data):
-    print("Historial de paciente recibido del bus:")
+    print("Historial de paciente:")
     try:
         # Eliminar el "OK" del principio
         if data.startswith('OK'):
