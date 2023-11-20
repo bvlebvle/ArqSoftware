@@ -42,7 +42,7 @@ try:
         print("Processing ...")
       
         # Aquí añadirías el manejo de acciones para 'smeds'
-        if accion == 'ht':  # 'ht' podría ser la acción para 'horas trabajadas'
+        if accion == 'ht': 
             id_medico = parametros
             horas_trabajadas = calcularHorasTrabajadasPorRut(id_medico)
             print (horas_trabajadas)    

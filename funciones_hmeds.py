@@ -16,7 +16,7 @@ def verHistorialMedico(rut, archivo_citas='./DB/citas.csv', archivo_medicos='./D
     id_medico = obtenerIDMedico(rut, archivo_medicos)
     if id_medico is None:
         print("Médico no encontrado.")
-        return []
+        return f" - Médico no encontrado."
 
     historial = []
     with open(archivo_citas, 'r') as archivo:
@@ -44,7 +44,7 @@ def eliminarHistorialMedico(rut, archivo_citas='./DB/citas.csv', archivo_medicos
     id_medico = obtenerIDMedico(rut, archivo_medicos)
     if id_medico is None:
         print("Médico no encontrado.")
-        return False
+        return f" - Medico no encontrado."
 
     filas_actualizadas = []
     eliminado = False
@@ -64,7 +64,7 @@ def eliminarHistorialMedico(rut, archivo_citas='./DB/citas.csv', archivo_medicos
         csv_writer = csv.writer(archivo, delimiter='|')
         csv_writer.writerows(filas_actualizadas)
     
-    return eliminado
+    return f" - Historial eliminado correctamente."
 
 def editarHistorialMedico(parametros, archivo_citas='./DB/citas.csv', archivo_medicos='./DB/medicos.csv'):
     print("Estoy editando")
@@ -80,7 +80,7 @@ def editarHistorialMedico(parametros, archivo_citas='./DB/citas.csv', archivo_me
     id_medico = obtenerIDMedico(rut_medico, archivo_medicos)
     if id_medico is None:
         print("Médico no encontrado.")
-        return False
+        return f" - Historial eliminado correctamente."
 
     filas_actualizadas = []
     editado = False
@@ -103,4 +103,4 @@ def editarHistorialMedico(parametros, archivo_citas='./DB/citas.csv', archivo_me
         csv_writer = csv.writer(archivo, delimiter='|')
         csv_writer.writerows(filas_actualizadas)
     
-    return editado
+    return f" - Historial editado correctamente."

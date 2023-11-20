@@ -1,7 +1,7 @@
 
 import datetime
 import re
-
+import json
 
 def crearData(data):
     cant = len(data)
@@ -162,10 +162,27 @@ def menuBhora():
     print("1. Bloquear horas")
     print("2. Desbloquear horas")
     # print("3. Agregar horas")  # Agregar dps quiza
-    print("4. Volver al menú principal")
+    print("3. Volver al menú principal")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
 
+def printDataHmeds(cadena):
+    print("")
+    indice_inicio = cadena.find("[")
+    indice_fin = cadena.rfind("]")
+
+    # Extraer el contenido dentro de los corchetes
+    contenido_dentro_corchetes = cadena[indice_inicio + 1:indice_fin]
+    neto = contenido_dentro_corchetes.replace("'", "")
+    neto = neto.split("}, {")  # Separar cada conjunto de datos
+
+    for elemento in neto:
+        datos = elemento.split(", ")
+        print("Datos del historial médico:")
+        for dato in datos:
+            clave, valor = dato.split(": ")
+            print(f" - {clave}: {valor}")
+        print("------")
 
 def printDataRmeds2(cadena):
    # OK['TRAUMATOLOGIA', '3-JUAN-PEREZ', '2-JUAN3-PEREZ', '1-JUAN2-PEREZ', 'GENERAL', '1-VALE-DIAZ', 'GINECOLOGIA', '1-MARTIN-SAAVEDRA']
@@ -257,3 +274,24 @@ def printDataVmeds2(cadena):
 # [[2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30'], [0], [0], [0], [0], [0], [0]]
 data = "OK[[2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30'], [0], [0], [0], [0], [0], [0]] "
 printDataVmeds2(data)
+    
+def printlindahpcss(data):
+    print("Historial de paciente recibido del bus:")
+    try:
+        # Eliminar el "OK" del principio
+        if data.startswith('OK'):
+            data = data[2:]
+        # Reemplazar comillas simples por comillas dobles para obtener un JSON válido
+        data = data.replace("'", '"')
+        # Cargar la cadena como JSON
+        citas = json.loads(data)
+        for cita in citas:
+            print(f"Día de la semana: {cita['dia_semana']}, Día: {cita['dia']}, Mes: {cita['mes']}, "
+                  f"Hora: {cita['hora']}, Estado: {cita['estado']}, Monto: {cita['monto']}")
+        print("")
+
+    except json.JSONDecodeError as e:
+        print("Error al decodificar la respuesta JSON:", e)
+    except Exception as e:
+        print("Ocurrió un error:", e)
+    

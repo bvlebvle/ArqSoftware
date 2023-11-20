@@ -5,27 +5,19 @@ def obtenerIDPaciente(rut, archivo_pacientes='./DB/pacientes.csv'):
         csv_reader = csv.reader(archivo, delimiter='|')
         for fila in csv_reader:
             if fila[1] == rut:
-                return fila[0]  # Retorna el ID del paciente
-    return None  # Retorna None si no encuentra el RUT
-
-def obtenerIDPaciente(rut, archivo_pacientes='./DB/pacientes.csv'):
-    with open(archivo_pacientes, 'r') as archivo:
-        csv_reader = csv.reader(archivo, delimiter='|')
-        for fila in csv_reader:
-            if fila[1] == rut:
                 return fila[0]  # Retorna la ID del paciente
-    return None  # Retorna None si no encuentra el RUT
+    return f" - Paciente no registrado"  # Retorna None si no encuentra el RUT
 
 def generarNumero(rut):
     id_paciente = obtenerIDPaciente(rut)
     if id_paciente is None:
-        return "Paciente no registrado"
+        return f" - Paciente no registrado"
 
     with open('./DB/turnos.csv', 'r') as archivo_turnos:
         csv_reader = csv.DictReader(archivo_turnos, delimiter='|')
         for fila in csv_reader:
             if fila['id_paciente'] == id_paciente:
-                return f"Ya tienes un número, tu turno es {fila['turno']}"
+                return f" - Ya tienes un número, tu turno es {fila['turno']}"
 
     # Si la ID del paciente no se encuentra en el archivo, se procede a asignar un nuevo turno
     turnos = []
@@ -44,7 +36,7 @@ def generarNumero(rut):
             nuevo_id = max(int(row['id']) for row in csv.DictReader(open('./DB/turnos.csv', 'r'), delimiter='|')) + 1
         csv_writer.writerow([nuevo_id, id_paciente, nuevo_turno, 'esperando'])
 
-    return f"Tu turno es {nuevo_turno}"
+    return f" - Tu turno es {nuevo_turno}"
 
 
 def avanzarNumero(archivo_turnos='./DB/turnos.csv'):
@@ -74,8 +66,8 @@ def avanzarNumero(archivo_turnos='./DB/turnos.csv'):
         writer = csv.writer(file, delimiter='|')
         writer.writerows(rows)
 
-    return f"turno: {menor_turno}" if menor_turno is not None else "No hay turnos disponibles"
+    return f" - turno: {menor_turno}" if menor_turno is not None else " No hay turnos disponibles"
 
 
 menor_turno_encontrado = avanzarNumero()
-print(f"Menor turno encontrado y eliminado: {menor_turno_encontrado}")
+print(f" - Menor turno encontrado y eliminado: {menor_turno_encontrado}")

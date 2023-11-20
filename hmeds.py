@@ -39,7 +39,6 @@ try:
         print("Processing ...")
         
         if accion == 'vr':  # Ver historial médico
-            # Aquí llamas a la función de ver historial médico con los parámetros adecuados
             result = verHistorialMedico(parametros)
             respuesta_historial = str(result)
             longitud_respuesta = len(respuesta_historial)
@@ -49,18 +48,18 @@ try:
         if accion == 'el':  # Eliminar historial médico
             result = eliminarHistorialMedico(parametros)
             if result:
-                resp = b'00014hmedsEliminado'
+                resp = f'00014hmeds{result}'.encode()
             else:
-                resp = b'00016hmedsNoEliminado'
+                resp = f'00016hmeds{result}'.encode()
 
         if accion == 'ed':
             # Realizar acción para editar historial médico
             result = editarHistorialMedico(parametros)  # Manejar adecuadamente los parámetros
             
             if result:
-                resp = b'00012hmedsEditado'
+                resp = f'00012hmeds{result}'.encode()
             else:
-                resp = b'00014hmedsNoEditado' 
+                resp = f'00014hmeds{result}'.encode() 
     
         
         print('sending {!r}'.format(resp))

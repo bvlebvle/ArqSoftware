@@ -1,2 +1,6 @@
 id|id_paciente|id_medico|dia_semana|dia|mes|hora|estado|monto|
 1|1|1|DOMINGO|19|11|08:00|AGENDADA|5.590
+2|1|1|MARTES|14|11|13:30|AGENDADA|12.590
+3|1|1|MARTES|14|11|13:30|AGENDADA|12.590
+
+

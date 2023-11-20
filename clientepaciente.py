@@ -1,6 +1,5 @@
 import socket
 from funciones_cliente import *
-
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = ('localhost', 5001)
 print('Conectando a {} puerto {}'.format(*server_address))
