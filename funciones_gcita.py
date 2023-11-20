@@ -106,9 +106,13 @@ def crearCita(parametros):
     if id_medico == 0:
         print("Medico no existe")
         return False
+    print("id medico: ", id_medico)
+    print("id paciente: ", id_paciente)
+
     # horario
     dia_semana = obtenerDiaSemana(fecha_dia, mes)
     id_horario = buscarIdHorario(id_medico, dia_semana, hora)
+    print("id horario: ", id_horario)
     if id_horario == 0:
         print("Horario no existe")
         return False
@@ -244,10 +248,10 @@ def editarCita(parametros):
         return False
 
 
-# parametros = "1111-1000-23-10-11:00"
+parametros = "987654321-123456789-20-11-09:00"
 # eliminar = "1111-1000-23-10-11:00"
 # print(obtenerParametros(parametros))
-# crearCita(parametros)
+crearCita(parametros)
 # eliminarCita(eliminar)
 # parametros_editar = "1111-1000-23-10-11:00-23-10-10:30"
 # print(obtenerParametrosEditar(parametros_editar))
