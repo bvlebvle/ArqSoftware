@@ -44,8 +44,12 @@ try:
         print("Processing ...")
 
         if accion == 'gc':
-            result = agregarCobro(parametros)
-            resp = b'00007gcobrOK'
+            result, monto = agregarCobro(parametros)
+            respuesta_agenda = str(monto)
+            longitud_respuesta = len(respuesta_agenda)
+            mensaje_respuesta = f"{longitud_respuesta:05d}gcobr" + \
+                respuesta_agenda
+            resp = mensaje_respuesta.encode()
 
         print('sending {!r}'.format(resp))
         sock.sendall(resp)

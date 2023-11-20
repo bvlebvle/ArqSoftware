@@ -325,6 +325,14 @@ while True:
                 data.append(rutM)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
+                result = enviarMsg(msg.encode())
+                result = result[2:]
+                print("")
+                print("Valor a pagar por consulta: $", result)
+                print("")
+            if accion == "2":
+                break
+
     if opcion == "7":
         while True:
             accion = menuHpacs()
