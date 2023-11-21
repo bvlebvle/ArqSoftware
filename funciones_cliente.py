@@ -149,9 +149,7 @@ def menuHmeds():
     print("Historial para médicos")
     print("Puede escoger entre las siguientes opciones:")
     print("1. Ver historial médico de un médico")
-    print("2. Editar historial médico de un médico")
-    print("3. Eliminar historial médico de un médico")
-    print("4. Volver al menú principal")
+    print("2. Volver al menú principal")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
 
