@@ -468,7 +468,11 @@ while True:
                 data.append(hora)
                 msg = crearMsg(data, servicio)
                 # Envía mensaje a través del bus
-                enviarMsg(msg.encode())
+                responde = enviarMsg(msg.encode())
+                if responde.startswith('OK'):
+                    print("")
+                    print("Se ha bloqueado el horario correctamente")
+                    print("")
             if accion == "2":
                 data = []
                 print("Desbloqueo de horario")
@@ -480,15 +484,19 @@ while True:
                 data.append(dia)
                 data.append(hora)
                 msg = crearMsg(data, servicio)
+                responde = enviarMsg(msg.encode())
                 # Envía el mensaje a través del bus
-                enviarMsg(msg.encode())
+                if responde.startswith('OK'):
+                    print("")
+                    print("Se ha desbloqueado el horario correctamente")
+                    print("")
             if accion == "3":
                 break
     if opcion == "12":
         servicio = "aturp"
         data.append("an")
         msg = crearMsg(data, servicio)
-        enviarMsg(msg.encode())
+        print(enviarMsg(msg.encode()))
 
     if opcion == "0":
         print("Saliendo del sistema")
