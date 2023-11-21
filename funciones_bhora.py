@@ -26,13 +26,13 @@ def bloquearHoras(parametros, archivo_horarios='./DB/horarios.csv'):
     for horario in horarios:
         if horario[1] == id_medico and horario[2] == dia and horario[3] == horaInicio:
             if horario[5] == 'False':
-                return " - Este bloque ya está bloqueado"
+                return f" - Este bloque ya está bloqueado"
             else:
                 horario[5] = 'False'
                 with open(archivo_horarios, 'w', newline='') as archivo_actualizado:
                     csv_writer = csv.writer(archivo_actualizado, delimiter='|')
                     csv_writer.writerows(horarios)
-                return " - Bloqueado correctamente"
+                return f" - Bloqueado correctamente"
             
 def desbloquearHoras(parametros, archivo_horarios='./DB/horarios.csv'):
     divido = parametros.split("-")
@@ -52,12 +52,12 @@ def desbloquearHoras(parametros, archivo_horarios='./DB/horarios.csv'):
     for horario in horarios:
         if horario[1] == id_medico and horario[2] == dia and horario[3] == horaInicio:
             if horario[5] == 'True':
-                return " - Este bloque ya está desbloqueado"
+                return f" - Este bloque ya está desbloqueado"
             else:
                 horario[5] = 'True'
                 with open(archivo_horarios, 'w', newline='') as archivo_actualizado:
                     csv_writer = csv.writer(archivo_actualizado, delimiter='|')
                     csv_writer.writerows(horarios)
-                return " - Desloqueado correctamente"
+                return f" - Desloqueado correctamente"
     
-    return " - Primero debe agregar bloque"
+    return f" - Primero debe agregar bloque"

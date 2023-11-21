@@ -491,7 +491,7 @@ while True:
                 data = []
                 print("Bloqueo de horario")
                 rut = input("Ingrese rut de médico: ")
-                dia = input("Ingrese el dia: ")
+                dia = input("Ingrese el dia: ").upper()
                 hora = input("Ingrese la hora: ")
                 data.append("bh")
                 data.append(rut)
@@ -504,7 +504,7 @@ while True:
                 data = []
                 print("Desbloqueo de horario")
                 rut = input("Ingrese rut de médico: ")
-                dia = input("Ingrese el dia: ")
+                dia = input("Ingrese el dia: ").upper()
                 hora = input("Ingrese la hora: ")
                 data.append("dh")
                 data.append(rut)

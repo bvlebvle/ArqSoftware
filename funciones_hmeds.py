@@ -28,9 +28,9 @@ def verHistorialMedico(rut, archivo_citas='./DB/citas.csv', archivo_medicos='./D
                 continue
             if fila[2] == id_medico:
                 historial.append({
-                    'id_cita': fila[0],
-                    'id_paciente': fila[1],
-                    'id_medico': fila[2],
+#                    'id_cita': fila[0],
+#                    'id_paciente': fila[1],
+#                    'id_medico': fila[2],
                     'dia_semana': fila[3],
                     'dia': fila[4],
                     'mes': fila[5],
