@@ -95,8 +95,7 @@ def crearCita(parametros):
 
     # paciente
     id_paciente = obtenerIdPaciente(rutP)
-    print ("rut_p: ", rutP)
-    print ("rut_m: ", rutM)
+
     if id_paciente == 0:
         print("Paciente no existe")
         return False
@@ -134,7 +133,7 @@ def crearCita(parametros):
         monto = obtenerMonto(id_medico)
         print("Monto: ", monto)
 
-        nueva_cita = [id_cita, id_medico, id_paciente, dia_semana,
+        nueva_cita = [id_cita, id_paciente, id_medico, dia_semana,
                       fecha_dia, mes, hora, estado, monto]
         with open(archivo_csv, 'a', newline='') as archivo:
             csv_writer = csv.writer(archivo, delimiter='|')

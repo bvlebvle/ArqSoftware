@@ -42,6 +42,10 @@ def arregloHoras(horaInicio, horaFin):
     horaInicio = float(horaInicio)
     horaFin = float(horaFin)
     arreglo.append(horaInicio)
+    parte_decimal = round(horaInicio - int(horaInicio), 2)
+
+    if parte_decimal == 0.3:
+        horaInicio = int(horaInicio) + 0.5
     while horaInicio < horaFin:
         horaInicio += 0.5
         arreglo.append(horaInicio)

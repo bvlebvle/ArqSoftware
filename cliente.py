@@ -68,7 +68,11 @@ while True:
                 data.append(especialidad)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result =enviarMsg(msg.encode())
+                if result.startswith('OK'):
+                    print ("")
+                    print("Médico creado correctamente")
+                    print ("")
             if accion == "2":
                 data = []
                 print("Edición de médico")
@@ -84,7 +88,11 @@ while True:
                 data.append(new_especialidad)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result=enviarMsg(msg.encode())
+                if result.startswith('OK'):
+                    print ("")
+                    print("Médico modificado correctamente")
+                    print ("")
             if accion == "3":
                 data = []
                 print("Eliminación de médico")
@@ -93,7 +101,11 @@ while True:
                 data.append(rut)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result=enviarMsg(msg.encode())
+                if result.startswith('OK'):
+                    print ("")
+                    print("Médico eliminado correctamente")
+                    print ("")
             if accion == "4":
                 break
     if opcion == "2":
@@ -114,7 +126,11 @@ while True:
                 data.append(hora_fin)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result=enviarMsg(msg.encode())
+                if result.startswith('OK'):
+                    print ("")
+                    print("Horario creado correctamente")
+                    print ("")
             if accion == "2":
                 data = []
                 print("Edición de horario")
@@ -135,7 +151,11 @@ while True:
                 data.append(hora_fin_nueva)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result=enviarMsg(msg.encode())
+                if result.startswith('OK'):
+                    print ("")
+                    print("Horario editado correctamente")
+                    print ("")
             if accion == "3":
                 data = []
                 print("Eliminación de horario")
@@ -150,7 +170,11 @@ while True:
                 data.append(hora_fin)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result=enviarMsg(msg.encode())
+                if result.startswith('OK'):
+                    print ("")
+                    print("Horario eliminado correctamente")
+                    print ("")
             if accion == "4":
                 break
     if opcion == "3":
@@ -173,7 +197,11 @@ while True:
                 data.append(hora)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result=enviarMsg(msg.encode())
+                if result.startswith('OK'):
+                    print ("")
+                    print("Cita creada correctamente")
+                    print ("")
 
             if accion == "2":
                 data = []
@@ -197,7 +225,11 @@ while True:
                 data.append(hora_nueva)
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result=enviarMsg(msg.encode())
+                if result.startswith('OK'):
+                    print ("")
+                    print("Cita modificada correctamente")
+                    print ("")
 
             if accion == "3":
                 data = []
@@ -216,7 +248,11 @@ while True:
                 msg = crearMsg(data, servicio)
 
                 # envia mensaje a traves del bus
-                enviarMsg(msg.encode())
+                result=enviarMsg(msg.encode())
+                if result.startswith('OK'):
+                    print ("")
+                    print("Cita eliminada correctamente")
+                    print ("")
             if accion == "4":
                 break
     if opcion == "4":
@@ -346,46 +382,6 @@ while True:
                 response = enviarMsg(msg.encode())
                 printlindahpcss(response)
             if accion == "2":
-                data = []
-                print("Editar historial de paciente")
-                rut = input("Ingrese rut de paciente: ")
-                fecha_antigua_dia = input("Ingrese dia actual de la cita: ")
-                fecha_antigua_mes = input("Ingrese mes actual de la cita: ")
-                fecha_antigua_hora = input("Ingrese hora actual de la cita: ")
-                fecha_nueva_dia = input("Ingrese dia nuevo de la cita: ")
-                fecha_nueva_mes = input("Ingrese mes nuevo de la cita: ")
-                fecha_nueva_hora = input("Ingrese hora nuevo de la cita: ")
-                data.append("ed")
-                data.append(rut)
-                data.append(fecha_antigua_dia)
-                data.append(fecha_antigua_mes)
-                data.append(fecha_antigua_hora)
-                data.append(fecha_nueva_dia)
-                data.append(fecha_nueva_mes)
-                data.append(fecha_nueva_hora)
-                msg = crearMsg(data, servicio)
-                # envia mensaje a traves del bus
-                responde = enviarMsg(msg.encode())
-                if responde.startswith('OK'):
-                    print("Modificado correctamente")
-            if accion == "3":
-                data = []
-                print("Eliminar historial de paciente")
-                rut = input("Ingrese rut de paciente: ")
-                dia = input("Ingrese dia de la cita: ")
-                mes = input("Ingrese mes de la cita: ")
-                hora = input("Ingrese hora de la cita: ")
-                data.append("el")
-                data.append(rut)
-                data.append(dia)
-                data.append(mes)
-                data.append(hora)
-                msg = crearMsg(data, servicio)
-                # envia mensaje a traves del bus
-                responde = enviarMsg(msg.encode())
-                if responde.startswith('OK'):
-                    print("Eliminado correctamente")
-            if accion == "4":
                 break
     if opcion == "8":
         while True:
@@ -406,7 +402,7 @@ while True:
                     print("box creado")
             if accion == "2":
                 data = []
-                print("asignar box")
+                print("Asignar box")
                 rut = input("rut del medico: ")
                 box = input("id de box asignado: ")
                 data.append("as")
@@ -433,7 +429,9 @@ while True:
                 msg = crearMsg(data, servicio)
                 # envia mensaje a traves del bus
                 responde = enviarMsg(msg.encode())
+                print("")
                 print("las horas trabajadas por el medico son: " + responde[2:]+ " horas")
+                print("")
             if accion == "2":
                 break
     if opcion == "10":

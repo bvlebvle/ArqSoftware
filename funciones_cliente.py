@@ -120,9 +120,7 @@ def menuHpacs():
     print("Historial de pacientes")
     print("Puede escoger entre los siguientes servicios:")
     print("1. ver historial de paciente")
-    print("2. editar historial de paciente")
-    print("3. eliminar historial de paciente")
-    print("4. Volver al menú principal")
+    print("2. Volver al menú principal")
     opcion = input("Ingrese el número de la opción que desea: ")
     return opcion
 
@@ -272,10 +270,9 @@ def printDataVmeds2(cadena):
 # [2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30']
 # printDataVmeds("[2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30']")
 # [[2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30'], [0], [0], [0], [0], [0], [0]]
-data = "OK[[2, 'VALE DIAZ-13:30', 'MARTIN SAAVEDRA-13:30'], [0], [0], [0], [0], [0], [0]] "
-printDataVmeds2(data)
     
 def printlindahpcss(data):
+    print("")
     print("Historial de paciente:")
     try:
         # Eliminar el "OK" del principio

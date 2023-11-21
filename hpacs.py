@@ -2,6 +2,7 @@ import socket
 # Asegúrate de importar las funciones necesarias para manejar el historial de pacientes
 from funciones_hpacs import *
 from funciones_cliente import *
+from funciones_gcita import *
 
 # Crear un socket TCP/IP
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -52,14 +53,13 @@ try:
             # Codificar y enviar
             resp = mensaje_respuesta.encode() 
         if accion == 'el':
-            result = eliminarHistorialPaciente(parametros)
+            result = eliminarCita(parametros)
             if result: 
                 resp = b'00014hpcssEliminado'
             else: 
                 resp = b'00016hpcssNoEliminado'
         if accion == 'ed':
-            print("parametros: ", parametros)
-            result = editarHistorialPaciente(parametros)
+            result = editarCita(parametros)
             if result: 
                 resp = b'00012hpcssEditado'
             else: 
